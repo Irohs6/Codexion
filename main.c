@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/14 14:27:20 by gacattan          #+#    #+#             */
-/*   Updated: 2026/09/15 17:00:24 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/09/16 19:18:38 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,18 @@ int	main(int argc, char **argv)
 		while (i != argc - 1)
 		{
 			error = ft_is_number_valid(argv[i], i);
-			if (error != 1)
-				return (error);
+			if (error == 0)
+				return (1);
 			printf("Converted Number: %d\n", ft_convert_number(argv[i], i));
 			i++;
 		}
 		error = ft_is_str_valid(argv[i], i);
-		if (error != 1)
-			return (error);
+		if (error == 0)
+			return (1);
 		printf ("String: %s", argv[i]);
 	}
 	else
-		return (print_error(4, ERR_ARG_COUNT_MSG, 0));
+		print_error(4, ERR_ARG_COUNT_MSG, 0);
+		return (1);
 	return (0);
 }
