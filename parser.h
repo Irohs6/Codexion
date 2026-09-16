@@ -15,7 +15,7 @@
 # define PARSER_H
 
 int		ft_is_number_valid(char *str, int arg_position);
-void	ft_is_str_valid(char *str, int arg_position);
+int		ft_is_str_valid(char *str, int arg_position);
 int		ft_convert_number(char *str, int arg_position);
 
 #endif // PARSER_H

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,35 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef ERROR_H
+#define ERROR_H
+
 #include <stdio.h>
-#include <stdlib.h>
 
-#include "parser.h"
-#include "utils.h"
-#include "error.h"
+# define ERR_ARG_COUNT_MSG "invalid number of arguments"
+# define ERR_EMPTY_MSG "empty string provided"
+# define ERR_NEGATIVE_MSG "negative numbers are not allowed"
+# define ERR_NUMBER_MSG "invalid number"
+# define ERR_RANGE_MSG "number out of range"
+# define ERR_SCHEDULER_MSG "expected fifo or edf"
+# define ERR_MEMORY_MSG "memory allocation failed"
+# define ERR_THREAD_MSG "thread creation failed"
+# define ERR_MUTEX_MSG "mutex initialization failed"
+# define ERR_COND_MSG "condition variable initialization failed"
 
-int	main(int argc, char **argv)
-{
-	int	i;
-	int error;
+int	print_error(int error_id, const char *str, int arg_position);
 
-	if (argc == 9)
-	{
-		i = 1;
-		while (i != argc - 1)
-		{
-			error = ft_is_number_valid(argv[i], i);
-			if (error != 1)
-				return (error);
-			printf("Converted Number: %d\n", ft_convert_number(argv[i], i));
-			i++;
-		}
-		error = ft_is_str_valid(argv[i], i);
-		if (error != 1)
-			return (error);
-		printf ("String: %s", argv[i]);
-	}
-	else
-		return (print_error(4, ERR_ARG_COUNT_MSG, 0));
-	return (0);
-}
+#endif

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,35 +10,35 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "parser.h"
-#include "utils.h"
 #include "error.h"
 
-int	main(int argc, char **argv)
+static const char	*argument_name(int position)
 {
-	int	i;
-	int error;
+	if (position == 1)
+		return ("number_of_coders");
+	if (position == 2)
+		return ("time_to_burnout");
+	if (position == 3)
+		return ("time_to_compile");
+	if (position == 4)
+		return ("time_to_debug");
+	if (position == 5)
+		return ("time_to_refactor");
+	if (position == 6)
+		return ("number_of_compiles_required");
+	if (position == 7)
+		return ("dongle_cooldown");
+	if (position == 8)
+		return ("scheduler");
+	return ("unknown");
+}
 
-	if (argc == 9)
-	{
-		i = 1;
-		while (i != argc - 1)
-		{
-			error = ft_is_number_valid(argv[i], i);
-			if (error != 1)
-				return (error);
-			printf("Converted Number: %d\n", ft_convert_number(argv[i], i));
-			i++;
-		}
-		error = ft_is_str_valid(argv[i], i);
-		if (error != 1)
-			return (error);
-		printf ("String: %s", argv[i]);
-	}
+int	print_error(int error_id, const char *str, int arg_position)
+{
+	if (arg_position > 0)
+		fprintf(stderr, "ERROR %d: %s ("
+			"argument: %d: %s)\n", error_id, str, arg_position, argument_name(arg_position)	);
 	else
-		return (print_error(4, ERR_ARG_COUNT_MSG, 0));
+		fprintf(stderr, "ERROR %d: %s\n", error_id, str);
 	return (0);
 }

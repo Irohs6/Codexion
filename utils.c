@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "utils.h"
+#include "error.h"
 
 size_t	ft_strlen(char *str)
 {
@@ -18,18 +19,8 @@ size_t	ft_strlen(char *str)
 
 	i = 0;
 	if (!str)
-		print_error(1, "NULL string provided", 0);
+		return (print_error(1, "NULL string provided", 0));
 	while (str[i])
 		i++;
 	return (i);
-}
-
-void	print_error(int error_id, char *str, int arg_position)
-{
-	if (arg_position > 0)
-		fprintf(stderr, "ERROR %d: %s ("
-			"Arg position: %d)\n", error_id, str, arg_position);
-	else
-		fprintf(stderr, "ERROR %d: %s\n", error_id, str);
-	exit (error_id);
 }

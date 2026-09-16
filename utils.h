@@ -7,6 +7,5 @@
 # include <string.h>
 
 size_t	ft_strlen(char *str);
-void	print_error(int error_id, char *str, int arg_position);
 
 #endif // UTILS_H
