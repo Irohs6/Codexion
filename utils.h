@@ -8,4 +8,4 @@
 
 size_t	ft_strlen(char *str);
 
-#endif // UTILS_H
+#endif

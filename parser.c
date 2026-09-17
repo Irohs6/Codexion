@@ -6,7 +6,7 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/14 14:27:25 by gacattan          #+#    #+#             */
-/*   Updated: 2026/09/17 15:29:20 by iroh             ###   ########.fr       */
+/*   Updated: 2026/09/17 15:46:10 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "error.h"
 #include "config.h"
 
-int	ft_is_number_valid(char *str, int arg_position)
+static int	ft_is_number_valid(char *str, int arg_position)
 {
 	int	i;
 	int	negative;
@@ -42,7 +42,7 @@ int	ft_is_number_valid(char *str, int arg_position)
 	return (1);
 }
 
-int	ft_is_str_valid(char *str, int arg_position)
+static int	ft_is_str_valid(char *str, int arg_position)
 {
 	if (!str || !str[0])
 		return (print_error(1, ERR_EMPTY_MSG, arg_position));
@@ -51,8 +51,8 @@ int	ft_is_str_valid(char *str, int arg_position)
 	return (1);
 }
 
-int	ft_convert_number(char *str, int arg_position)
-{
+static int	ft_convert_number(char *str, int arg_position)
+{ 
 	int		i;
 	long	result;
 
@@ -68,24 +68,22 @@ int	ft_convert_number(char *str, int arg_position)
 	return ((int) result);
 }
 
-void	save_structure(t_config *config, void *value, int arg_position)
+static void	save_structure(t_config *config, int value, int arg_position)
 {
 	if (arg_position == 1)
-		config->number_of_coders = *((int *)value);
+		config->number_of_coders = value;
 	else if (arg_position == 2)
-		config->time_to_burnout = *((int *)value);
+		config->time_to_burnout = value;
 	else if (arg_position == 3)
-		config->time_to_compile = *((int *)value);
+		config->time_to_compile = value;
 	else if (arg_position == 4)
-		config->time_to_debug = *((int *)value);
+		config->time_to_debug = value;
 	else if (arg_position == 5)
-		config->time_to_refactor = *((int *)value);
+		config->time_to_refactor = value;
 	else if (arg_position == 6)
-		config->number_of_compiles_required = *((int *)value);
+		config->number_of_compiles_required = value;
 	else if (arg_position == 7)
-		config->dongle_cooldown = *((int *)value);
-	else if (arg_position == 8)
-		config->scheduler = (const char *)value;
+		config->dongle_cooldown = value;
 }
 
 int	parse(int argc, char **argv, t_config *config)
@@ -102,12 +100,12 @@ int	parse(int argc, char **argv, t_config *config)
 		number = ft_convert_number(argv[index], index);
 		if (number == -1)
 			return (-1);
-		save_structure(config, &number, index);
+		save_structure(config, number, index);
 		index++;
 	}
-	
+
 	if (ft_is_str_valid(argv[index], index) == -1)
 		return (-1);
-	save_structure(config, argv[index], index);
+	config->scheduler = argv[index];
 	return (1);
 }

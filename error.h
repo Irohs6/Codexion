@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/14 14:27:20 by gacattan          #+#    #+#             */
-/*   Updated: 2026/09/15 17:00:24 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/09/17 15:46:46 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_H
-#define ERROR_H
+# define ERROR_H
 
-#include <stdio.h>
+# include <stdio.h>
 
 # define ERR_ARG_COUNT_MSG "invalid number of arguments"
 # define ERR_EMPTY_MSG "empty string provided"

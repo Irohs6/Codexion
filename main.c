@@ -6,7 +6,7 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/14 14:27:20 by gacattan          #+#    #+#             */
-/*   Updated: 2026/09/17 15:17:50 by iroh             ###   ########.fr       */
+/*   Updated: 2026/09/17 15:46:31 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 int	main(int argc, char **argv)
 {
-	t_config config;
+	t_config		config;
 
 	if (argc == 9)
 	{
