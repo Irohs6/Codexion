@@ -6,7 +6,7 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/14 14:27:20 by gacattan          #+#    #+#             */
-/*   Updated: 2026/09/16 19:14:33 by iroh             ###   ########.fr       */
+/*   Updated: 2026/09/17 14:47:02 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,5 @@ int	print_error(int error_id, const char *str, int arg_position)
          error_id, str, arg_position, argument_name(arg_position));
 	else
 		fprintf(stderr, "ERROR %d: %s\n", error_id, str);
-	return (0);
+	return (-1);
 }

@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/14 14:27:02 by gacattan          #+#    #+#             */
-/*   Updated: 2026/09/17 15:18:28 by iroh             ###   ########.fr       */
+/*   Created: 2026/09/17 14:56:17 by iroh              #+#    #+#             */
+/*   Updated: 2026/09/17 15:02:03 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef CONFIG_H
+#define CONFIG_H
 
-#ifndef PARSER_H
-# define PARSER_H
+typedef struct s_config
+{
+    int number_of_coders;
+    int time_to_burnout;
+    int time_to_compile;
+    int time_to_debug;
+    int time_to_refactor;
+    int number_of_compiles_required;
+    int dongle_cooldown;
+    const char *scheduler;
+}   t_config;
 
-#include "config.h"
-
-int		ft_is_number_valid(char *str, int arg_position);
-int		ft_is_str_valid(char *str, int arg_position);
-int		ft_convert_number(char *str, int arg_position);
-int		parse(int argc, char **argv, t_config *config);
-
-#endif // PARSER_H
+#endif
