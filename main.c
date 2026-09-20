@@ -6,7 +6,7 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/14 14:27:20 by gacattan          #+#    #+#             */
-/*   Updated: 2026/09/17 15:46:31 by iroh             ###   ########.fr       */
+/*   Updated: 2026/09/17 16:47:24 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,14 @@ int	main(int argc, char **argv)
 	{
 		if (parse(argc, argv, &config) == -1)
 			return (1);
+		printf("%d\n", config.number_of_coders);
+		printf("%d\n", config.time_to_burnout);
+		printf("%d\n", config.time_to_compile);
+		printf("%d\n", config.time_to_debug);
+		printf("%d\n", config.time_to_refactor);
+		printf("%d\n", config.number_of_compiles_required);
+		printf("%d\n", config.dongle_cooldown);
+		printf("%s\n", config.scheduler);
 	}
 	else
 	{

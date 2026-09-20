@@ -6,7 +6,7 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/14 14:27:25 by gacattan          #+#    #+#             */
-/*   Updated: 2026/09/17 15:46:10 by iroh             ###   ########.fr       */
+/*   Updated: 2026/09/20 16:45:54 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	ft_is_str_valid(char *str, int arg_position)
 }
 
 static int	ft_convert_number(char *str, int arg_position)
-{ 
+{
 	int		i;
 	long	result;
 
@@ -81,13 +81,13 @@ static void	save_structure(t_config *config, int value, int arg_position)
 	else if (arg_position == 5)
 		config->time_to_refactor = value;
 	else if (arg_position == 6)
-		config->number_of_compiles_required = value;
+		config->nb_of_cp_required = value;
 	else if (arg_position == 7)
 		config->dongle_cooldown = value;
 }
 
 int	parse(int argc, char **argv, t_config *config)
-{	
+{
 	int	index;
 	int	number;
 
@@ -103,7 +103,6 @@ int	parse(int argc, char **argv, t_config *config)
 		save_structure(config, number, index);
 		index++;
 	}
-
 	if (ft_is_str_valid(argv[index], index) == -1)
 		return (-1);
 	config->scheduler = argv[index];

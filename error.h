@@ -6,7 +6,7 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/14 14:27:20 by gacattan          #+#    #+#             */
-/*   Updated: 2026/09/17 15:46:46 by iroh             ###   ########.fr       */
+/*   Updated: 2026/09/18 15:56:08 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 # define ERR_THREAD_MSG "thread creation failed"
 # define ERR_MUTEX_MSG "mutex initialization failed"
 # define ERR_COND_MSG "condition variable initialization failed"
+# define ERR_ZERO_MSG "zero is not allowed"
+# define ERR_ALLOC_OVERFLOW_MSG "allocation size overflow"
+# define ERR_NULL_MSG "null pointer provided"
 
 int	print_error(int error_id, const char *str, int arg_position);
 
