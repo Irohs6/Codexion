@@ -31,7 +31,7 @@ int	main(int argc, char **argv)
 		printf("%d\n", config.time_to_compile);
 		printf("%d\n", config.time_to_debug);
 		printf("%d\n", config.time_to_refactor);
-		printf("%d\n", config.number_of_compiles_required);
+		printf("%d\n", config.nb_of_cp_required);
 		printf("%d\n", config.dongle_cooldown);
 		printf("%s\n", config.scheduler);
 	}

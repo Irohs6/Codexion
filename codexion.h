@@ -15,30 +15,27 @@
 
 # include <stdint.h>
 # include <pthread.h>
-# include "memory_manager.h"
 # include "config.h"
 
 typedef struct s_coder
 {
-	int			id;
-	int			nb_compile;
-	int			compile_required;
-	uint64_t	time_to_compile;
-	uint64_t	time_to_refactor;
-	uint64_t	time_to_debug;
-	uint64_t	time_to_burnout;
-	uint64_t	last_time_compile_start;
-	pthread_t	thread;
+	int				id;
+	int				nb_compile;
+	uint64_t		last_time_compile_start;
+	pthread_t		thread;
+	const t_config	*config;
 }	t_coder;
 
 typedef struct s_dongle
 {
 	int				id;
 	uint64_t		last_release_time;
-	uint64_t		cooldown;
 	pthread_mutex_t	mutex;
+	const t_config	*config;
 }	t_dongle;
 
-int	init_codexion(t_memory_manager *manager, const t_config *config);
+struct	s_memory_manager;
+
+int	init_codexion(struct s_memory_manager *manager, const t_config *config);
 
 #endif
