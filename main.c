@@ -6,34 +6,41 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/14 14:27:20 by gacattan          #+#    #+#             */
-/*   Updated: 2026/09/17 16:47:24 by iroh             ###   ########.fr       */
+/*   Updated: 2026/09/21 13:09:06 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include <stdlib.h>
 
 #include "parser.h"
 #include "config.h"
-#include "utils.h"
 #include "error.h"
+#include "codexion.h"
+#include "memory_manager.h"
+
 
 int	main(int argc, char **argv)
 {
-	t_config		config;
+	t_config			config;
+	t_memory_manager	memory_manager;
+	int	i;
+
+	i = 0;
 
 	if (argc == 9)
 	{
 		if (parse(argc, argv, &config) == -1)
 			return (1);
-		printf("%d\n", config.number_of_coders);
-		printf("%d\n", config.time_to_burnout);
-		printf("%d\n", config.time_to_compile);
-		printf("%d\n", config.time_to_debug);
-		printf("%d\n", config.time_to_refactor);
-		printf("%d\n", config.nb_of_cp_required);
-		printf("%d\n", config.dongle_cooldown);
-		printf("%s\n", config.scheduler);
+		if (memory_manager_init(&memory_manager, config.number_of_coders) == -1)
+			return (1);
+		if (init_codexion(&memory_manager, &config) == -1)
+			return (1);
+		while (i <config.number_of_coders)
+		{
+			printf("Coder %d:\n", memory_manager.array_coder[i].id);
+			i++;
+		}
+		free_memory_manager(&memory_manager);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/20 15:27:00 by iroh              #+#    #+#             */
-/*   Updated: 2026/09/20 16:40:29 by iroh             ###   ########.fr       */
+/*   Updated: 2026/09/21 16:44:00 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ typedef struct s_dongle
 struct	s_memory_manager;
 
 int	init_codexion(struct s_memory_manager *manager, const t_config *config);
+int	start_coders(t_memory_manager *manager, int count);
 
 #endif

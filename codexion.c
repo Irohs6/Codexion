@@ -6,7 +6,7 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/20 16:32:40 by iroh              #+#    #+#             */
-/*   Updated: 2026/09/20 17:03:24 by iroh             ###   ########.fr       */
+/*   Updated: 2026/09/21 16:45:51 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,9 @@ int	init_codexion(t_memory_manager *manager, const t_config *config)
 		i++;
 	}
 	return (0);
+}
+
+int		start_coders(t_memory_manager *manager, int count)
+{
+
 }

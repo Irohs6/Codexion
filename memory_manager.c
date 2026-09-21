@@ -6,7 +6,7 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 12:40:55 by iroh              #+#    #+#             */
-/*   Updated: 2026/09/20 16:19:59 by iroh             ###   ########.fr       */
+/*   Updated: 2026/09/21 14:40:36 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,21 @@ static void	*ft_calloc(size_t nb_memb, size_t size)
 	return (ptr);
 }
 
-int	memory_manager_init(t_memory_manager *manager, int count)
+int	memory_manager_init(t_memory_manager *manager, int nb_coder)
 {
-	if (!manager || count <= 0)
+	if (!manager || nb_coder <= 0)
 	{
 		print_error(7, ERR_NULL_MSG, 0);
 		return (-1);
 	}
-	manager->array_coder = NULL;
-	manager->array_dongle = NULL;
-	manager->array_coder = ft_calloc(count, sizeof(t_coder));
+	// manager->array_coder = NULL;
+	// manager->array_dongle = NULL;
+	manager->array_coder = ft_calloc(nb_coder, sizeof(t_coder));
 	if (!manager->array_coder)
 	{
 		return (-1);
 	}
-	manager->array_dongle = ft_calloc(count, sizeof(t_dongle));
+	manager->array_dongle = ft_calloc(nb_coder, sizeof(t_dongle));
 	if (!manager->array_dongle)
 	{
 		free(manager->array_coder);
@@ -72,7 +72,7 @@ int	memory_manager_init(t_memory_manager *manager, int count)
 	return (0);
 }
 
-int	ft_free_memory_manager(t_memory_manager *manager)
+int	free_memory_manager(t_memory_manager *manager)
 {
 	if (!manager)
 		return (-1);

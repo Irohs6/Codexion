@@ -6,7 +6,7 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 12:41:02 by iroh              #+#    #+#             */
-/*   Updated: 2026/09/20 16:20:20 by iroh             ###   ########.fr       */
+/*   Updated: 2026/09/21 14:05:58 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct s_memory_manager
 	t_dongle	*array_dongle;
 }	t_memory_manager;
 
-int	memory_manager_init(t_memory_manager *manager, int count);
-int	ft_free_memory_manager(t_memory_manager *manager);
+int	memory_manager_init(t_memory_manager *manager, int nb_coder);
+int	free_memory_manager(t_memory_manager *manager);
 
 #endif // MEMORY_MANAGER_H
