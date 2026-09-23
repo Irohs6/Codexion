@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_manager.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 12:40:55 by iroh              #+#    #+#             */
-/*   Updated: 2026/09/21 14:40:36 by iroh             ###   ########.fr       */
+/*   Updated: 2026/09/23 15:46:03 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	ft_bzero(void *s, size_t n)
 	}
 }
 
-static void	*ft_calloc(size_t nb_memb, size_t size)
+void	*ft_calloc(size_t nb_memb, size_t size)
 {
 	void	*ptr;
 	size_t	total;
@@ -55,8 +55,6 @@ int	memory_manager_init(t_memory_manager *manager, int nb_coder)
 		print_error(7, ERR_NULL_MSG, 0);
 		return (-1);
 	}
-	// manager->array_coder = NULL;
-	// manager->array_dongle = NULL;
 	manager->array_coder = ft_calloc(nb_coder, sizeof(t_coder));
 	if (!manager->array_coder)
 	{

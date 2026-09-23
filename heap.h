@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   memory_manager.h                                   :+:      :+:    :+:   */
+/*   heap.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/18 12:41:02 by iroh              #+#    #+#             */
-/*   Updated: 2026/09/23 15:55:37 by gacattan         ###   ########.fr       */
+/*   Created: 2026/09/23 14:33:08 by gacattan          #+#    #+#             */
+/*   Updated: 2026/09/23 15:42:36 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MEMORY_MANAGER_H
-# define MEMORY_MANAGER_H
+#ifndef HEAP_H
+# define HEAP_H
 
-# include <stdlib.h>
+# include "memory_manager.h"
 # include "codexion.h"
 
-typedef struct s_memory_manager
+typedef struct s_heap
 {
-	t_coder		*array_coder;
-	t_dongle	*array_dongle;
-}	t_memory_manager;
+	struct s_heap	*next;
+	struct s_coder	*coder;
+}	t_heap;
 
-void	*ft_calloc(size_t nb_memb, size_t size);
-int		memory_manager_init(t_memory_manager *manager, int nb_coder);
-int		free_memory_manager(t_memory_manager *manager);
+void	ft_lstpop(t_heap **heap);
+int		ft_heap_init(t_heap **heap, char *scheduler, t_coder *coder);
 
-#endif // MEMORY_MANAGER_H
+#endif // HEAP_H
