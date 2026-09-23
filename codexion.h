@@ -6,7 +6,7 @@
 /*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/20 15:27:00 by iroh              #+#    #+#             */
-/*   Updated: 2026/09/23 15:56:13 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/09/23 16:18:03 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 
 # include <stdint.h>
 # include <pthread.h>
-typedef struct s_dongle	t_dongle;
 
 # include "config.h"
+
+typedef struct s_dongle	t_dongle;
+struct					s_memory_manager;
 
 typedef struct s_coder
 {
@@ -29,7 +31,7 @@ typedef struct s_coder
 	const t_config	*config;
 	t_dongle		*dongle_1;
 	t_dongle		*dongle_2;
-} t_coder;
+}	t_coder;
 
 struct s_dongle
 {
@@ -38,8 +40,6 @@ struct s_dongle
 	pthread_mutex_t	mutex;
 	const t_config	*config;
 };
-
-struct	s_memory_manager;
 
 int	init_codexion(struct s_memory_manager *manager, const t_config *config);
 int	create_threads(struct s_memory_manager *manager, int nb_coder);
