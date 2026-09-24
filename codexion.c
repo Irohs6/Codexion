@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/20 16:32:40 by iroh              #+#    #+#             */
-/*   Updated: 2026/09/23 15:48:23 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/09/24 22:00:52 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,25 @@ void	*start_coder_thread(void *coder)
 	return (NULL);
 }
 
+static void	clean_thread_failure(t_memory_manager *manager,
+	int created, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < created)
+	{
+		pthread_join(manager->array_coder[i].thread, NULL);
+		i++;
+	}
+	i = 0;
+	while (i < count)
+	{
+		pthread_mutex_destroy(&manager->array_dongle[i].mutex);
+		i++;
+	}
+}
+
 int	create_threads(struct s_memory_manager *manager, int nb_coder)
 {
 	int	i;
@@ -61,10 +80,7 @@ int	create_threads(struct s_memory_manager *manager, int nb_coder)
 				start_coder_thread, &manager->array_coder[i]) != 0)
 		{
 			print_error(10, ERR_THREAD_MSG, 0);
-			while (--i >= 0)
-			{
-				pthread_join(manager->array_coder[i].thread, NULL);
-			}
+			clean_thread_failure(manager, i, nb_coder);
 			return (-1);
 		}
 		i++;
@@ -94,4 +110,3 @@ int	init_mutexes(struct s_memory_manager *manager, int nb_dongle)
 	}
 	return (0);
 }
-

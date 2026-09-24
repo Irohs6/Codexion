@@ -2,6 +2,21 @@
 
 Cette feuille de route décrit la suite du développement, dans l’ordre. Le [sujet original](subject.md) et sa [traduction française](subject_fr.md) restent les références pour les exigences.
 
+## État actuel — 24 septembre 2026
+
+| Partie | Avancement |
+| --- | --- |
+| Parsing et messages d’erreur | En place ; continuer les vérifications aux limites lors des tests finaux. |
+| Allocation des tableaux de coders et de dongles | En place. |
+| Identifiants, configuration commune et liens vers les dongles | En place dans `init_codexion`. |
+| Initialisation des mutex | En place, avec destruction des mutex déjà initialisés en cas d’échec. |
+| Création et attente des threads | En place ; la routine affiche seulement un message puis se termine. |
+| Nettoyage | Présent pour le lancement actuel ; à étendre aux attentes, au moniteur et aux futures allocations. |
+| File FIFO/EDF | Une liste chaînée existe ; elle reste à remplacer par un véritable tas. |
+| Cycle des coders, cooldown, moniteur et arrêt partagé | À réaliser. |
+
+La création des threads fonctionne comme point de départ, mais la simulation complète n’est pas encore implémentée. Les messages de démarrage actuels devront laisser place aux logs du sujet.
+
 ## Organisation retenue
 
 - Une configuration commune `t_config`, accessible en lecture seule via `const t_config *config`.
@@ -13,7 +28,7 @@ Cette feuille de route décrit la suite du développement, dans l’ordre. Le [s
 
 La configuration et les tableaux doivent rester valides tant que les threads les utilisent. On libère chaque tableau en entier, jamais une de ses cases séparément. Les tas servant aux files FIFO/EDF auront également besoin d’une gestion de leur mémoire.
 
-## 1. Associer les dongles aux coders
+## 1. Associer les dongles aux coders — en place
 
 Chaque coder conserve deux pointeurs vers ses dongles voisins, qui sont des éléments de `array_dongle`.
 
@@ -30,7 +45,7 @@ Avec un seul coder, les deux pointeurs désignent le même dongle. Ce cas doit �
 
 **À vérifier :** les voisins partagent bien un dongle et le dernier coder est relié au premier.
 
-## 2. Initialiser les mutex des dongles
+## 2. Initialiser les mutex des dongles — en place
 
 Parcourir le tableau et appeler `pthread_mutex_init` sur chaque mutex. Vérifier le résultat de chaque appel : zéro signifie succès.
 
@@ -73,6 +88,10 @@ Avant la première compilation, le point de départ est le début de la simulati
 **À vérifier :** la précision permet l’affichage du burnout dans les 10 ms exigées.
 
 ## 5. Construire l’acquisition et la libération des dongles
+
+Commencer par construire le tas indépendamment des threads. Le [guide illustré du tas](tas_codexion.md) explique sa représentation, les échanges, l’ajout et le retrait. La structure actuelle avec `next` représente une liste chaînée, même si elle trie les demandes par deadline.
+
+Une fois les opérations du tas vérifiées, les intégrer à l’arbitrage et protéger leurs accès concurrents. Retirer une demande du tas ne signifie pas que le coder possède déjà ses deux dongles : cette attribution dépend aussi de leur disponibilité et du cooldown.
 
 Gérer ensemble :
 
@@ -123,7 +142,7 @@ Le burnout d’un coder arrête toute la simulation. Il ne provoque pas la libé
 
 **À vérifier :** détection et log du burnout dans les délais, arrêt au quota et absence de threads qui restent bloqués.
 
-## 8. Brancher le lancement et le nettoyage
+## 8. Compléter le lancement et le nettoyage
 
 L’ordre général dans le programme est :
 
@@ -155,4 +174,14 @@ Prévoir aussi l’échec de création après le lancement de seulement quelques
 
 ## Priorité immédiate
 
-Commencer par les étapes **1 et 2** : relier les dongles et initialiser leurs mutex. Elles complètent l’initialisation sans imposer d’écrire toute la simulation d’un coup.
+Les étapes 1 et 2 sont déjà présentes. La prochaine étape est le **tas**, en commençant sans concurrence pour comprendre et vérifier chaque opération.
+
+1. Lire le [guide illustré du tas appliqué à Codexion](tas_codexion.md).
+2. Remplacer les maillons par un tableau et distinguer capacité allouée et nombre de demandes présentes.
+3. Définir les informations d’une demande et la comparaison FIFO/EDF, y compris les égalités.
+4. Écrire l’ajout avec remontée, puis l’extraction avec descente.
+5. Vérifier les cas vide, un élément, plein, deadlines égales et extractions successives. Vérifier que les coders restent à leur adresse d’origine.
+6. Reprendre les étapes 3 et 4 : état commun, temps et logs.
+7. Intégrer le tas à l’acquisition des dongles, puis écrire le cycle, le moniteur et l’arrêt coordonné.
+
+Lorsque la routine des threads ne se terminera plus immédiatement, le nettoyage après un échec de création devra d’abord demander l’arrêt et réveiller les threads déjà lancés, avant de les rejoindre.
