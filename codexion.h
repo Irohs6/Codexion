@@ -46,12 +46,13 @@ struct s_dongle
 	const t_config	*config;
 };
 
-int		init_codexion(struct s_memory_manager *manager, const t_config *config);
-int		create_threads(struct s_memory_manager *manager, int nb_coder);
-int		init_mutexes(struct s_memory_manager *manager, int nb_dongle);
+int			init_codexion(struct s_memory_manager *manager,
+				const t_config *config);
+int			create_threads(struct s_memory_manager *manager, int nb_coder);
+int			init_mutexes(struct s_memory_manager *manager, int nb_dongle);
 uint64_t	now_ms(void);
-void	init_start_time(struct s_memory_manager *manager, int count);
-void	compile(t_coder *coder);
-void	*start_coder_thread(void *arg);
+void		init_start_time(struct s_memory_manager *manager, int count);
+void		compile(t_coder *coder);
+void		*start_coder_thread(void *arg);
 
 #endif
