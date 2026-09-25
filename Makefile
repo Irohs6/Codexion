@@ -8,6 +8,7 @@ SRCS = \
 		parser.c \
 		utils.c \
 		codexion.c \
+		codexion2.c \
 		error.c \
 		memory_manager.c \
 		heap.c \

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+<rect width="1200" height="900" fill="#101827"/>
+<style>text{font-family:Arial,sans-serif;fill:#e8edf5}.title{font-size:30px;font-weight:700}.head{font-size:23px;font-weight:700}.body{font-size:20px}.small{font-size:17px}.a{fill:#63dcb5}.b{fill:#80b9ff}.c{fill:#ffc478}.box{fill:#1c2940;stroke:#354762;stroke-width:2}.line{stroke:#9cabc1;stroke-width:3}</style>
+<text x="50" y="55" class="title">Codexion : une file de demandes par dongle</text>
+<text x="50" y="90" class="body">Exemple FIFO : A demande en premier, puis B, puis C. Les trois dongles sont libres.</text>
+<rect x="45" y="120" width="1110" height="100" rx="16" class="box"/>
+<text x="75" y="160" class="head a">Coder A → dongles 1 et 2</text>
+<text x="75" y="192" class="small">ordre d’arrivée : 1</text>
+<text x="445" y="160" class="head b">Coder B → dongles 2 et 3</text>
+<text x="445" y="192" class="small">ordre d’arrivée : 2</text>
+<text x="815" y="160" class="head c">Coder C → dongles 1 et 3</text>
+<text x="815" y="192" class="small">ordre d’arrivée : 3</text>
+<rect x="45" y="245" width="350" height="295" rx="16" class="box"/>
+<rect x="425" y="245" width="350" height="295" rx="16" class="box"/>
+<rect x="805" y="245" width="350" height="295" rx="16" class="box"/>
+<text x="75" y="285" class="head">Tas du dongle 1</text>
+<text x="455" y="285" class="head">Tas du dongle 2</text>
+<text x="835" y="285" class="head">Tas du dongle 3</text>
+<path d="M220 350 L150 420 M600 350 L530 420 M980 350 L910 420" class="line"/>
+
+<rect x="165" y="320" width="110" height="55" rx="12" fill="#234c43"/>
+<rect x="95" y="415" width="110" height="55" rx="12" fill="#5a4230"/>
+<rect x="545" y="320" width="110" height="55" rx="12" fill="#234c43"/>
+<rect x="475" y="415" width="110" height="55" rx="12" fill="#27466b"/>
+<rect x="925" y="320" width="110" height="55" rx="12" fill="#27466b"/>
+<rect x="855" y="415" width="110" height="55" rx="12" fill="#5a4230"/>
+<text x="188" y="356" class="head a">A · 1</text><text x="118" y="451" class="head c">C · 3</text>
+<text x="568" y="356" class="head a">A · 1</text><text x="498" y="451" class="head b">B · 2</text>
+<text x="948" y="356" class="head b">B · 2</text><text x="878" y="451" class="head c">C · 3</text>
+<text x="75" y="510" class="body">Tableau : [demande A, demande C]</text>
+<text x="455" y="510" class="body">Tableau : [demande A, demande B]</text>
+<text x="835" y="510" class="body">Tableau : [demande B, demande C]</text>
+<rect x="45" y="565" width="1110" height="130" rx="16" fill="#203e36"/>
+<text x="75" y="604" class="head a">A est premier dans les deux tas dont il a besoin : il peut compiler.</text>
+<text x="75" y="640" class="body">Sous les mutex 1 et 2 : réserver les deux dongles et retirer les deux demandes de A.</text>
+<text x="75" y="672" class="body">Puis relâcher les mutex. Les dongles restent occupés pendant la compilation.</text>
+<rect x="45" y="720" width="1110" height="140" rx="16" class="box"/>
+<text x="75" y="759" class="head">Après le retrait de A</text>
+<text x="75" y="798" class="body">Tas 1 : [C]          Tas 2 : [B]          Tas 3 : [B, C]</text>
+<text x="75" y="833" class="body">B est prioritaire pour 2 et 3, mais attend la libération de 2 et la fin de son cooldown.</text>
+</svg>

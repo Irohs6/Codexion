@@ -3,26 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   heap.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/23 14:33:08 by gacattan          #+#    #+#             */
-/*   Updated: 2026/09/23 15:42:36 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/09/25 21:21:53 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HEAP_H
 # define HEAP_H
 
-# include "memory_manager.h"
-# include "codexion.h"
+
+# include <stdint.h>
+
+typedef struct s_coder	t_coder;
+
+typedef struct s_request
+{
+	t_coder		*coder;
+	uint64_t	arrival_order;
+	uint64_t	deadline;
+}	t_request;
 
 typedef struct s_heap
 {
-	struct s_heap	*next;
-	struct s_coder	*coder;
+	t_request	requests[2];
+	int			size;
 }	t_heap;
 
-void	ft_lstpop(t_heap **heap);
-int		ft_heap_init(t_heap **heap, char *scheduler, t_coder *coder);
-
+int			heap_push(t_heap *heap, t_request request, const char *sheduler);
+int			heap_pop(t_heap *heap);
+t_request	get_heap_first(t_heap *heap);
 #endif // HEAP_H

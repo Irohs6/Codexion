@@ -6,13 +6,28 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/20 16:32:40 by iroh              #+#    #+#             */
-/*   Updated: 2026/09/24 22:00:52 by iroh             ###   ########.fr       */
+/*   Updated: 2026/09/25 21:58:05 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 #include "memory_manager.h"
 #include "error.h"
+
+static void	init_dongle_id(t_memory_manager *manager, int nb_coders, int i)
+{
+	t_dongle	*tmp;
+
+	manager->array_coder[i].dongle_1 = &manager->array_dongle[i];
+	manager->array_coder[i].dongle_2 = &manager->array_dongle[
+		(i + 1) % nb_coders];
+	if (manager->array_coder[i].dongle_1 > manager->array_coder[i].dongle_2)
+	{
+		tmp = manager->array_coder[i].dongle_1;
+		manager->array_coder[i].dongle_1 = manager->array_coder[i].dongle_2;
+		manager->array_coder[i].dongle_2 = tmp;
+	}
+}
 
 int	init_codexion(t_memory_manager *manager, const t_config *config)
 {
@@ -27,25 +42,18 @@ int	init_codexion(t_memory_manager *manager, const t_config *config)
 	{
 		manager->array_coder[i].id = i + 1;
 		manager->array_coder[i].config = config;
-		manager->array_coder[i].dongle_1 = &manager->array_dongle[i];
-		manager->array_coder[i].dongle_2 = &manager->array_dongle[
-			(i + 1) % config->number_of_coders];
+		init_dongle_id(manager, config->number_of_coders, i);
 		manager->array_dongle[i].id = i + 1;
 		manager->array_dongle[i].config = config;
+		manager->array_dongle[i].is_available = 1;
 		i++;
 	}
 	if (init_mutexes(manager, config->number_of_coders) != 0)
 		return (-1);
+	init_start_time(manager, config->number_of_coders);
 	if (create_threads(manager, config->number_of_coders) != 0)
 		return (-1);
-	printf("All threads and mutexes initialized successfully.\n");
 	return (0);
-}
-
-void	*start_coder_thread(void *coder)
-{
-	printf("Starting coder thread for coder ID: %d\n", ((t_coder *)coder)->id);
-	return (NULL);
 }
 
 static void	clean_thread_failure(t_memory_manager *manager,
