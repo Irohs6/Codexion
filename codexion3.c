@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   codexion3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/14 14:27:02 by gacattan          #+#    #+#             */
-/*   Updated: 2026/09/17 17:13:24 by iroh             ###   ########.fr       */
+/*   Created: 2026/09/26 19:03:49 by iroh              #+#    #+#             */
+/*   Updated: 2026/09/26 19:04:02 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "codexion.h"
 
-# include "utils.h"
+t_bool	cooldown_ready(t_coder *coder)
+{
+	uint64_t	now;
 
-# include "config.h"
-
-t_bool	parse(int argc, char **argv, t_config *config);
-
-#endif // PARSER_H
+	now = now_ms();
+	if (now - coder->dongle_1->last_release_time
+		< (uint64_t)coder->config->dongle_cooldown)
+		return (FALSE);
+	if (now - coder->dongle_2->last_release_time
+		< (uint64_t)coder->config->dongle_cooldown)
+		return (FALSE);
+	return (TRUE);
+}

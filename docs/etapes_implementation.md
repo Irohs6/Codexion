@@ -1,187 +1,200 @@
 # Codexion — étapes d’implémentation
 
-Cette feuille de route décrit la suite du développement, dans l’ordre. Le [sujet original](subject.md) et sa [traduction française](subject_fr.md) restent les références pour les exigences.
+État relu le **26 septembre 2026**, à partir des sources présentes et du [sujet original](subject.md), notamment ses sections V, VI et VII. La [traduction française](subject_fr.md) reste disponible.
 
-## État actuel — 24 septembre 2026
+Cette feuille de route distingue les mécanismes écrits des exigences encore à réaliser ou à vérifier. Les logs fournis montrent des exécutions cohérentes ; ils ne prouvent pas à eux seuls la conformité de tous les cas concurrents.
 
-| Partie | Avancement |
+## 1. Ce qui est déjà en place
+
+| Partie | État dans le code |
 | --- | --- |
-| Parsing et messages d’erreur | En place ; continuer les vérifications aux limites lors des tests finaux. |
-| Allocation des tableaux de coders et de dongles | En place. |
-| Identifiants, configuration commune et liens vers les dongles | En place dans `init_codexion`. |
-| Initialisation des mutex | En place, avec destruction des mutex déjà initialisés en cas d’échec. |
-| Création et attente des threads | En place ; la routine affiche seulement un message puis se termine. |
-| Nettoyage | Présent pour le lancement actuel ; à étendre aux attentes, au moniteur et aux futures allocations. |
-| File FIFO/EDF | Une liste chaînée existe ; elle reste à remplacer par un véritable tas. |
-| Cycle des coders, cooldown, moniteur et arrêt partagé | À réaliser. |
+| Arguments | Huit arguments obligatoires, nombres non négatifs, contrôle de plage, scheduler `fifo` ou `edf`, refus de zéro coder. |
+| Erreurs | Identifiants et messages centralisés, affichage sur `stderr`, nom de l’argument concerné. |
+| Convention de retour | **`TRUE = 0`, `FALSE = -1`**, conformément au choix du projet. Comparaisons explicites. |
+| Mémoire | Un tableau de coders et un tableau de dongles ; allocation vérifiée, nettoyage normal et certains échecs partiels. |
+| Association des dongles | Deux voisins par coder ; pointeurs rangés dans l’ordre du tableau pour verrouiller le plus petit ID d’abord. |
+| Threads | Un thread par coder, puis `pthread_join` avant destruction des mutex et libération normale. |
+| Temps | `gettimeofday` converti en millisecondes ; un même instant initial attribué à tous les coders. |
+| Cycle | Inscription → attente → compilation → libération → debug → refactor → cycle suivant. |
+| Compteur | `nb_compile` augmente après une compilation terminée. |
+| Tas | Un tableau de deux demandes intégré à chaque dongle ; ajout, consultation et retrait de la racine. |
+| Inscription | Une seule inscription par cycle ; les deux mutex sont détenus pendant les inscriptions et la vérification de capacité. |
+| Attribution | Le coder doit être premier dans les deux tas, les deux dongles libres et leurs cooldowns terminés. Réservation et retrait des deux demandes sous mutex. |
+| FIFO | L’ordre d’insertion est conservé. |
+| EDF | La plus petite deadline passe en tête ; les égalités conservent l’ordre d’insertion. |
+| Cooldown | L’heure de libération est enregistrée pour les deux dongles ; `cooldown_ready` vérifie le délai sous leurs mutex. |
+| Logs des phases | Les textes de prise, compilation, debug et refactor sont présents, avec timestamp relatif et ID. |
+| Makefile | Sources et headers explicites, flags requis et dépendances sur les headers. Pas de `wildcard`. |
 
-La création des threads fonctionne comme point de départ, mais la simulation complète n’est pas encore implémentée. Les messages de démarrage actuels devront laisser place aux logs du sujet.
+**Le debug, le refactor et le cooldown ne sont plus des étapes à écrire : ils sont intégrés.** La priorité est maintenant la surveillance et l’arrêt de toute la simulation.
 
-## Organisation retenue
+## 2. Organisation actuelle
 
-- Une configuration commune `t_config`, accessible en lecture seule via `const t_config *config`.
-- Un tableau `array_coder` contenant les structures de tous les coders.
-- Un tableau `array_dongle` contenant les structures de tous les dongles.
-- Une allocation par tableau, sans liste chaînée de suivi des allocations.
-- Un thread par coder, dont l’identifiant est stocké dans le champ `pthread_t` de sa structure. `pthread_create` crée le thread ; allouer le tableau ne le crée pas.
-- Un mutex par dongle, à initialiser explicitement avec `pthread_mutex_init`.
+| Fichier | Rôle |
+| --- | --- |
+| `main.c` | Parsing, lancement, attente des threads, destruction et libération. |
+| `parser.c`, `config.h` | Validation et stockage des paramètres. |
+| `error.c`, `error.h` | Catalogue des erreurs et affichage. |
+| `memory_manager.c` | Allocation à zéro et libération des tableaux. |
+| `codexion.c` | Initialisation des coders/dongles, ordre des mutex, création des threads. |
+| `codexion2.c` | Temps, réservation, compilation, routine des threads et départ commun. |
+| `codexion3.c` | Vérification du cooldown. |
+| `simulation.c` | Debug et refactor. |
+| `requests.c` | Préparation et inscription des demandes sous mutex. |
+| `heap.c`, `heap.h` | Tas de demandes de capacité deux. |
 
-La configuration et les tableaux doivent rester valides tant que les threads les utilisent. On libère chaque tableau en entier, jamais une de ses cases séparément. Les tas servant aux files FIFO/EDF auront également besoin d’une gestion de leur mémoire.
+Les tas sont intégrés aux structures des dongles : ils ne demandent pas d’allocation séparée. Deux cases suffisent tant qu’un coder ne peut avoir qu’une demande par dongle, puisqu’un dongle n’a que deux voisins. Le cas d’un seul coder n’inscrit qu’une demande dans son unique tas.
 
-## 1. Associer les dongles aux coders — en place
+`request.deadline` est calculée depuis `last_time_compile_start`. Le champ `coder.deadline` existe mais n’est pas actuellement mis à jour ni utilisé pour ce calcul. `arrival_order` vaut actuellement zéro et n’est pas utilisé par le comparateur : l’ordre d’insertion assure le départage actuel. Ce ne sont pas deux compteurs déjà fonctionnels.
 
-Chaque coder conserve deux pointeurs vers ses dongles voisins, qui sont des éléments de `array_dongle`.
+## 3. Prochaine étape : état commun et synchronisation
 
-Pour le coder d’indice `i`, une convention possible est :
+Avant d’écrire la boucle du moniteur, prévoir les données qu’elle partagera avec les coders :
 
-```text
-premier dongle : array_dongle[i]
-second dongle  : array_dongle[(i + 1) % count]
-```
+- Un indicateur d’arrêt commun à toute la simulation.
+- La cause de fin : burnout, quota atteint ou erreur d’exécution.
+- Un mutex pour protéger cet état.
+- Un mutex commun pour les affichages.
+- L’accès aux coders, à leurs compteurs et à leur dernier début de compilation.
+- Le thread du moniteur et les informations nécessaires à son nettoyage.
 
-Les indices commencent à zéro ; les identifiants affichés commencent à un. Cette formule suppose `count > 0`.
+Une structure commune est une possibilité, sans variable globale. Choisir explicitement quels mutex protègent quelles données, puis un ordre de verrouillage commun.
 
-Avec un seul coder, les deux pointeurs désignent le même dongle. Ce cas doit être traité spécialement : le coder ne peut pas obtenir deux dongles distincts et il ne faut pas tenter de verrouiller deux fois le même mutex comme s’il s’agissait de deux ressources.
+Actuellement, chaque coder modifie son compteur et son dernier début de compilation dans son propre thread. Dès que le moniteur les lira pendant l’exécution, **lectures et écritures devront être synchronisées**. Protéger seulement les lectures du moniteur ne suffit pas.
 
-**À vérifier :** les voisins partagent bien un dongle et le dernier coder est relié au premier.
+Conserver la convention `TRUE = 0`, `FALSE = -1`. Un champ mis à zéro par `ft_calloc` n’est donc pas automatiquement « faux » : initialiser les futurs indicateurs d’arrêt à `FALSE` explicitement.
 
-## 2. Initialiser les mutex des dongles — en place
+## 4. Ajouter le moniteur de burnout obligatoire
 
-Parcourir le tableau et appeler `pthread_mutex_init` sur chaque mutex. Vérifier le résultat de chaque appel : zéro signifie succès.
+Le sujet exige un **thread de surveillance séparé**. Il n’existe pas encore.
 
-Conserver le nombre de mutex initialisés. Si une initialisation échoue, détruire uniquement ceux dont l’initialisation a réussi, puis libérer les tableaux.
-
-Mettre les octets à zéro avec `ft_calloc` ne remplace pas l’initialisation d’un mutex.
-
-**À vérifier :** le nettoyage fonctionne aussi après une initialisation partielle.
-
-## 3. Préparer les données communes de simulation
-
-Prévoir notamment :
-
-- L’instant de départ commun.
-- Un indicateur d’arrêt partagé.
-- Un mutex pour sérialiser les logs.
-- Les informations nécessaires au moniteur pour suivre les coders et le quota.
-- Les mécanismes permettant de réveiller les threads en attente lors de l’arrêt.
-
-Définir quelles données chaque mutex protège et dans quel ordre les mutex peuvent être acquis. Le dernier début de compilation et le compteur de compilations sont écrits par les coders et lus par le moniteur : ces accès doivent être synchronisés. Un indicateur d’arrêt partagé doit lui aussi être protégé.
-
-**À vérifier :** aucune donnée partagée modifiable n’est lue ou écrite sans le mécanisme de synchronisation prévu.
-
-## 4. Préparer les fonctions de temps et les logs
-
-- Obtenir le temps en millisecondes avec une base temporelle cohérente.
-- Afficher les horodatages relativement au départ de la simulation.
-- Produire exactement les messages imposés par le sujet.
-- Protéger les affichages pour éviter le mélange de deux lignes.
-- Rendre les attentes interruptibles à l’arrêt, plutôt que de retarder inutilement la fin du programme.
-
-Le délai de burnout court depuis le **début** de la dernière compilation :
+Pour chaque coder surveillé, calculer :
 
 ```text
-deadline = last_compile_start + time_to_burnout
+échéance = dernier début de compilation + time_to_burnout
+burnout lorsque le temps actuel atteint ou dépasse cette échéance
 ```
 
-Avant la première compilation, le point de départ est le début de la simulation. La compilation, le debug, le refactor et l’attente des dongles consomment ce délai.
+Avant la première compilation, le dernier début correspond à l’instant initial commun, déjà enregistré. Ne jamais repousser la deadline simplement parce qu’un coder attend un dongle.
 
-**À vérifier :** la précision permet l’affichage du burnout dans les 10 ms exigées.
+Le moniteur doit :
 
-## 5. Construire l’acquisition et la libération des dongles
+1. Lire un état cohérent des coders.
+2. Détecter le premier burnout.
+3. Déclencher l’arrêt commun.
+4. Afficher une seule annonce `timestamp X burned out`, dans les **10 ms** suivant le burnout réel.
+5. Faire terminer les autres threads, y compris ceux qui attendent une ressource.
 
-Commencer par construire le tas indépendamment des threads. Le [guide illustré du tas](tas_codexion.md) explique sa représentation, les échanges, l’ajout et le retrait. La structure actuelle avec `next` représente une liste chaînée, même si elle trie les demandes par deadline.
+Prévoir l’arbitrage entre la décision du moniteur et un coder qui s’apprête à commencer une compilation : ne pas laisser une nouvelle mise à jour du temps masquer un burnout déjà atteint.
 
-Une fois les opérations du tas vérifiées, les intégrer à l’arbitrage et protéger leurs accès concurrents. Retirer une demande du tas ne signifie pas que le coder possède déjà ses deux dongles : cette attribution dépend aussi de leur disponibilité et du cooldown.
+## 5. Arrêt global au quota et attentes interruptibles
 
-Gérer ensemble :
+Aujourd’hui, chaque coder termine sa propre boucle après son quota. Le programme attend ensuite tous les threads. Ce n’est pas encore une décision d’arrêt global au moment où tous ont terminé assez de compilations.
 
-- L’état disponible ou occupé de chaque dongle.
-- Son instant de libération et son cooldown.
-- Les demandes des coders et leur arbitrage.
-- Les files de priorité implémentées avec un tas, comme l’exige le sujet.
-- FIFO : ordre d’arrivée des demandes.
-- EDF : échéance de burnout la plus proche, avec un départage déterministe des égalités.
-- La prévention des interblocages et de la famine.
+En particulier, chaque coder exécute encore `debug` et `refactor` après sa dernière compilation. **Quand tous les quotas sont atteints, le sujet demande l’arrêt de la simulation**, sans attendre inutilement ces dernières phases.
 
-Un mutex seul ne garantit ni FIFO ni EDF. La prise des deux dongles doit être conçue pour éviter que tous les coders gardent chacun une ressource en attendant indéfiniment la seconde.
+À réaliser :
 
-**À vérifier :** exclusion mutuelle, respect du cooldown et de l’ordre d’arbitrage, progression sous EDF lorsque les paramètres le permettent.
+- Détecter que tous les compteurs ont atteint le quota et déclencher l’arrêt commun.
+- Faire consulter cet arrêt par chaque routine.
+- Rendre interruptibles compilation, debug, refactor et attente de dongles.
+- Lors d’un arrêt, libérer correctement les dongles détenus et abandonner les demandes restantes.
+- Éviter qu’un thread en échec laisse les autres attendre indéfiniment.
 
-## 6. Écrire le comportement d’un coder
+Les appels actuels à `usleep` couvrent toute une phase ; ils ne consultent pas d’indicateur d’arrêt. Une attente par courtes tranches avec vérification de l’arrêt, ou une attente temporisée adaptée, reste à concevoir. Les variables de condition sont autorisées, mais leur utilisation n’est pas obligatoire.
 
-Le cycle est :
+## 6. Cas d’un seul coder
+
+Le code reconnaît que les deux pointeurs désignent le même dongle et évite le double verrouillage. Toutefois, `take_dongle` retourne toujours `FALSE`, et la boucle d’attente n’a pas de condition d’arrêt : **elle reste infinie pour un quota positif**.
+
+Le comportement à compléter est : impossibilité de compiler avec deux dongles, attente surveillée, burnout au délai prévu, arrêt et nettoyage. Ne pas inventer un second dongle et ne pas rejeter arbitrairement ce cas prévu par le sujet.
+
+## 7. Logs : format présent, sérialisation à ajouter
+
+Les textes actuellement affichés correspondent aux phases du sujet :
 
 ```text
-Attendre les deux dongles
-        ↓
-Compiler
-        ↓
-Libérer les dongles
-        ↓
-Déboguer
-        ↓
-Refactoriser
-        ↓
-Recommencer
+timestamp X has taken a dongle
+timestamp X has taken a dongle
+timestamp X is compiling
+timestamp X is debugging
+timestamp X is refactoring
 ```
 
-Mettre à jour le dernier début de compilation lorsque la compilation commence, et compter les compilations terminées lorsqu’elles se terminent. Vérifier l’arrêt aux endroits nécessaires, notamment pendant les attentes.
+Mais la section VI exige explicitement **un mutex pour protéger les sorties**. Aucun mutex commun de log n’est encore présent. Un affichage propre sur les essais ne remplace pas cette exigence.
 
-**À vérifier :** les ressources détenues sont correctement relâchées lorsqu’un arrêt survient pendant le cycle.
+Prévoir une fonction d’affichage commune qui :
 
-## 7. Écrire le moniteur
+- Protège les logs avec le mutex commun.
+- Utilise un timestamp relatif au départ de la simulation.
+- Coordonne l’affichage avec l’arrêt afin d’éviter les messages normaux après le burnout.
+- Permet l’unique message de burnout.
 
-Un thread séparé doit :
+Les deux prises et le début de compilation sont actuellement imprimés ensemble dans `compile`, après la réservation. Vérifier leur placement temporel lors de l’intégration de l’arrêt et du moniteur. Aucun message de « fin de refactor » n’est demandé.
 
-- Détecter le premier burnout.
-- Détecter lorsque tous les coders ont atteint le quota de compilations.
-- Signaler l’arrêt de la simulation.
-- Faire réveiller les threads bloqués en attente de ressources ou de conditions.
+## 8. Arbitrage et progression : à confirmer par des tests
 
-Le burnout d’un coder arrête toute la simulation. Il ne provoque pas la libération immédiate de sa case dans le tableau.
+Les opérations de tas et leur usage sont écrits. La règle EDF actuelle départage les deadlines égales par l’ordre d’insertion ; documenter cette règle et vérifier sa cohérence entre les deux files. Si `arrival_order` doit servir de numéro explicite, son attribution reste à implémenter.
 
-**À vérifier :** détection et log du burnout dans les délais, arrêt au quota et absence de threads qui restent bloqués.
+Le sujet exige aussi l’absence de famine sous EDF lorsque les paramètres sont faisables. **L’ordre des mutex prévient les cycles de verrouillage, mais ne démontre pas cette propriété d’ordonnancement.** Vérifier notamment si l’attente simultanée de la première place dans deux files retarde inutilement des compilations possibles et provoque un burnout évitable.
 
-## 8. Compléter le lancement et le nettoyage
+Les exemples à quatre coders montrent un ordre très régulier, souvent une compilation à la fois. Cela ne suffit pas à prouver la progression pour d’autres durées, d’autres nombres de coders ou des deadlines différentes.
 
-L’ordre général dans le programme est :
+Le cooldown est implémenté : vérifier maintenant sa justesse, plutôt que le réécrire. Tester une reprise exactement à la fin du délai, un cooldown nul et le démarrage où les dongles n’ont encore jamais été utilisés.
 
-```text
-Parser les arguments
-        ↓
-Allouer les tableaux
-        ↓
-Initialiser les données, liens, mutex et autres synchronisations
-        ↓
-Créer les threads et coordonner leur départ
-        ↓
-Exécuter la simulation et détecter sa fin
-        ↓
-Signaler l’arrêt et réveiller les attentes
-        ↓
-Attendre les threads avec pthread_join
-        ↓
-Détruire les mutex et variables de condition initialisés
-        ↓
-Libérer les tableaux et les autres allocations
-```
+## 9. Départ, erreurs et nettoyage à compléter
 
-Un thread peut commencer à s’exécuter immédiatement après `pthread_create`. Les données qu’il utilise doivent donc être prêtes, et son départ doit être coordonné avec celui des autres threads.
+Un timestamp commun existe, mais les threads commencent dès leur création ; il n’y a pas encore de départ coordonné avec le moniteur. Pour un grand nombre de threads ou un petit délai de burnout, le temps passé à les créer peut compter avant que les derniers aient commencé à travailler. Prévoir un protocole de départ cohérent.
 
-Prévoir aussi l’échec de création après le lancement de seulement quelques threads : arrêter et rejoindre ceux qui ont réellement été créés, puis nettoyer les ressources initialisées.
+Le nettoyage normal est présent. Pour la suite :
 
-**À vérifier :** sorties normales, burnout, quota atteint et échecs partiels sans fuite mémoire, accès invalide ni attente bloquée. Utiliser Valgrind et des tests adaptés aux accès concurrents.
+- Créer et rejoindre aussi le moniteur.
+- À l’échec d’une création partielle, demander l’arrêt avant d’attendre les threads déjà lancés.
+- Traiter les échecs système pertinents pendant la simulation ; plusieurs retours de mutex et le retour de `gettimeofday` ne sont pas vérifiés actuellement.
+- Détruire uniquement les mutex et éventuelles conditions initialisés, après la fin des threads utilisateurs.
+- Vérifier les branches d’échec de `join`, de destruction et d’allocation sans accès invalide ni fuite.
 
-## Priorité immédiate
+La conversion des durées en microsecondes utilise actuellement `int * 1000`. Vérifier les grandes valeurs acceptées par le parsing : cette multiplication peut déborder avant l’appel à `usleep`. Ce point concerne la gestion des durées, pas une demande de remplacement du parsing.
 
-Les étapes 1 et 2 sont déjà présentes. La prochaine étape est le **tas**, en commençant sans concurrence pour comprendre et vérifier chaque opération.
+## 10. Norme, tests et README
 
-1. Lire le [guide illustré du tas appliqué à Codexion](tas_codexion.md).
-2. Remplacer les maillons par un tableau et distinguer capacité allouée et nombre de demandes présentes.
-3. Définir les informations d’une demande et la comparaison FIFO/EDF, y compris les égalités.
-4. Écrire l’ajout avec remontée, puis l’extraction avec descente.
-5. Vérifier les cas vide, un élément, plein, deadlines égales et extractions successives. Vérifier que les coders restent à leur adresse d’origine.
-6. Reprendre les étapes 3 et 4 : état commun, temps et logs.
-7. Intégrer le tas à l’acquisition des dongles, puis écrire le cycle, le moniteur et l’arrêt coordonné.
+Contrôles réalisés lors de cette mise à jour :
 
-Lorsque la routine des threads ne se terminera plus immédiatement, le nettoyage après un échec de création devra d’abord demander l’arrêt et réveiller les threads déjà lancés, avant de les rejoindre.
+- Vérification des sources avec `cc -Wall -Wextra -Werror -pthread -fsyntax-only` : réussie. Ce contrôle ne réalise pas l’édition des liens.
+- Norminette sur les fichiers C et headers : deux erreurs relevées, les autres fichiers passent.
+  - `codexion3.c` : saut de ligne final manquant, `BRACE_SHOULD_EOL`.
+  - `simulation.c` : lignes vides consécutives après les includes, `CONSECUTIVE_NEWLINES`.
+- Aucun code modifié pour cette mise à jour documentaire ; pas de nouvelle campagne de tests concurrents exécutée ici.
+
+Avant de considérer le projet terminé :
+
+- [ ] Compiler avec le Makefile et vérifier qu’un deuxième `make` ne relie pas inutilement.
+- [ ] Corriger les deux erreurs de norme.
+- [ ] Tester FIFO et EDF, les deadlines égales et la capacité des tas.
+- [ ] Tester un coder, deux coders, un nombre impair et un grand nombre de coders.
+- [ ] Tester le burnout pendant l’attente, la compilation, le debug et le refactor.
+- [ ] Vérifier le délai maximal de 10 ms pour le log de burnout.
+- [ ] Tester le quota 1, un quota supérieur et le quota 0 actuellement accepté.
+- [ ] Vérifier cooldown, exclusion des dongles et absence de messages après l’arrêt.
+- [ ] Tester les échecs partiels et la libération de toutes les ressources.
+- [ ] Refaire Valgrind et Helgrind après l’intégration du moniteur et de l’arrêt.
+
+Le `README.md` ne contient actuellement que le titre du projet. La section VII du sujet demande un README **en anglais** avec :
+
+- La première ligne en italique : « This project has been created as part of the 42 curriculum by … » avec les logins.
+- `Description`.
+- `Instructions` : compilation, arguments et exécution.
+- `Resources`, avec les références et les usages de l’IA précisés.
+- `Blocking cases handled` : interblocages, famine, cooldown, burnout et logs.
+- `Thread synchronization mechanisms` : les mécanismes réellement utilisés et les données qu’ils protègent.
+
+## Ordre conseillé à partir de maintenant
+
+1. Préparer l’état partagé, le mutex de log et la protection des données lues par le futur moniteur.
+2. Écrire le moniteur de burnout et le brancher au départ de la simulation.
+3. Relier l’arrêt à toutes les boucles et attentes, puis au quota global.
+4. Finaliser le cas d’un seul coder et le nettoyage des arrêts/échecs.
+5. Vérifier la progression FIFO/EDF, les délais et les logs avec des tests ciblés.
+6. Terminer le README et les derniers contrôles de norme et de mémoire.
+
+Pour les schémas des tas, voir [le guide](tas_codexion.md) et [l’exemple des files de dongles](tas_dongles_exemple.svg). Les variantes pédagogiques du guide ne remplacent pas la description du tableau fixe de deux demandes utilisée actuellement.

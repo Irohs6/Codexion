@@ -13,13 +13,16 @@
 #include <string.h>
 
 #include "heap.h"
+#include "error.h"
 
-int	heap_push(t_heap *heap, t_request request, const char *scheduler)
+t_bool	heap_push(t_heap *heap, t_request request, const char *scheduler)
 {
 	t_request		temp;
 
-	if (!heap || heap->size >= 2)
-		return (-1);
+	if (!heap || !scheduler || !request.coder)
+		return (print_error(ERR_NULL, 0));
+	if (heap->size >= 2)
+		return (print_error(ERR_HEAP_FULL, 0));
 	heap->requests[heap->size] = request;
 	heap->size++;
 	if (strcmp(scheduler, "edf") == 0)
@@ -32,17 +35,19 @@ int	heap_push(t_heap *heap, t_request request, const char *scheduler)
 			heap->requests[1] = temp;
 		}
 	}
-	return (0);
+	return (TRUE);
 }
 
-int	heap_pop(t_heap *heap)
+t_bool	heap_pop(t_heap *heap)
 {
-	if (!heap || heap->size == 0)
-		return (-1);
+	if (!heap)
+		return (print_error(ERR_NULL, 0));
+	if (heap->size == 0)
+		return (print_error(ERR_HEAP_EMPTY, 0));
 	if (heap->size == 2)
 		heap->requests[0] = heap->requests[1];
 	heap->size--;
-	return (0);
+	return (TRUE);
 }
 
 t_request	get_heap_first(t_heap *heap)

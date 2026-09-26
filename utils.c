@@ -19,7 +19,10 @@ size_t	ft_strlen(char *str)
 
 	i = 0;
 	if (!str)
-		return (print_error(1, "NULL string provided", 0));
+	{
+		print_error(ERR_NULL, 0);
+		return (0);
+	}
 	while (str[i])
 		i++;
 	return (i);

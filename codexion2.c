@@ -6,7 +6,7 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/23 16:21:20 by gacattan          #+#    #+#             */
-/*   Updated: 2026/09/25 22:07:43 by iroh             ###   ########.fr       */
+/*   Updated: 2026/09/26 19:04:49 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,16 @@ static t_bool	take_dongle(t_coder *coder)
 	request = get_heap_first(&coder->dongle_1->heap);
 	request2 = get_heap_first(&coder->dongle_2->heap);
 	if (request.coder != coder || request2.coder != coder
-		|| !coder->dongle_1->is_available
-		|| !coder->dongle_2->is_available)
+		|| coder->dongle_1->is_available == FALSE
+		|| coder->dongle_2->is_available == FALSE
+		|| cooldown_ready(coder) == FALSE)
 	{
 		pthread_mutex_unlock(&coder->dongle_1->mutex);
 		pthread_mutex_unlock(&coder->dongle_2->mutex);
 		return (FALSE);
 	}
-	coder->dongle_1->is_available = 0;
-	coder->dongle_2->is_available = 0;
+	coder->dongle_1->is_available = FALSE;
+	coder->dongle_2->is_available = FALSE;
 	heap_pop(&coder->dongle_1->heap);
 	heap_pop(&coder->dongle_2->heap);
 	pthread_mutex_unlock(&coder->dongle_1->mutex);
@@ -68,8 +69,10 @@ void	compile(t_coder *coder)
 	usleep(coder->config->time_to_compile * 1000);
 	pthread_mutex_lock(&coder->dongle_1->mutex);
 	pthread_mutex_lock(&coder->dongle_2->mutex);
-	coder->dongle_1->is_available = 1;
-	coder->dongle_2->is_available = 1;
+	coder->dongle_1->last_release_time = now_ms();
+	coder->dongle_2->last_release_time = coder->dongle_1->last_release_time;
+	coder->dongle_1->is_available = TRUE;
+	coder->dongle_2->is_available = TRUE;
 	pthread_mutex_unlock(&coder->dongle_1->mutex);
 	pthread_mutex_unlock(&coder->dongle_2->mutex);
 	coder->nb_compile++;
@@ -77,20 +80,21 @@ void	compile(t_coder *coder)
 
 void	*start_coder_thread(void *arg)
 {
-	t_coder		*coder;
-	t_request	request;
+	t_coder	*coder;
 
 	coder = arg;
 	while (coder->nb_compile < coder->config->nb_of_cp_required)
 	{
-		request.coder = coder;
-		request.deadline = coder->last_time_compile_start
-			+ coder->config->time_to_burnout;
-		heap_push(&coder->dongle_1->heap, request, coder->config->scheduler);
-		heap_push(&coder->dongle_2->heap, request, coder->config->scheduler);
+		if (register_requests(coder) == FALSE)
+		{
+			coder->failed = TRUE;
+			return (NULL);
+		}
 		while (take_dongle(coder) == FALSE)
 			usleep(1000);
 		compile(coder);
+		debug(coder);
+		refactor(coder);
 	}
 	return (NULL);
 }

@@ -34,46 +34,45 @@ void	*ft_calloc(size_t nb_memb, size_t size)
 
 	if (size != 0 && nb_memb > (size_t)-1 / size)
 	{
-		print_error(6, ERR_ALLOC_OVERFLOW_MSG, 0);
+		print_error(ERR_ALLOC_OVERFLOW, 0);
 		return (NULL);
 	}
 	total = nb_memb * size;
 	ptr = malloc(total);
 	if (!ptr)
 	{
-		print_error(6, ERR_MEMORY_MSG, 0);
+		print_error(ERR_MEMORY, 0);
 		return (NULL);
 	}
 	ft_bzero(ptr, total);
 	return (ptr);
 }
 
-int	memory_manager_init(t_memory_manager *manager, int nb_coder)
+t_bool	memory_manager_init(t_memory_manager *manager, int nb_coder)
 {
-	if (!manager || nb_coder <= 0)
-	{
-		print_error(7, ERR_NULL_MSG, 0);
-		return (-1);
-	}
+	if (!manager)
+		return (print_error(ERR_NULL, 0));
+	manager->array_coder = NULL;
+	manager->array_dongle = NULL;
+	if (nb_coder <= 0)
+		return (print_error(ERR_COUNT, 0));
 	manager->array_coder = ft_calloc(nb_coder, sizeof(t_coder));
 	if (!manager->array_coder)
-	{
-		return (-1);
-	}
+		return (FALSE);
 	manager->array_dongle = ft_calloc(nb_coder, sizeof(t_dongle));
 	if (!manager->array_dongle)
 	{
 		free(manager->array_coder);
 		manager->array_coder = NULL;
-		return (-1);
+		return (FALSE);
 	}
-	return (0);
+	return (TRUE);
 }
 
-int	free_memory_manager(t_memory_manager *manager)
+t_bool	free_memory_manager(t_memory_manager *manager)
 {
 	if (!manager)
-		return (-1);
+		return (print_error(ERR_NULL, 0));
 	if (manager->array_coder)
 	{
 		free(manager->array_coder);
@@ -84,5 +83,5 @@ int	free_memory_manager(t_memory_manager *manager)
 		free(manager->array_dongle);
 		manager->array_dongle = NULL;
 	}
-	return (0);
+	return (TRUE);
 }

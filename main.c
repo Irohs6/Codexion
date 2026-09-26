@@ -15,48 +15,66 @@
 #include "codexion.h"
 #include "memory_manager.h"
 
-static int	join_and_destroy(t_memory_manager *manager, int count)
+static t_bool	join_threads(t_memory_manager *manager, int count)
 {
-	int	i;
-	int	status;
+	int		i;
+	t_bool	status;
 
 	i = 0;
-	status = 0;
+	status = TRUE;
 	while (i < count)
 	{
 		if (pthread_join(manager->array_coder[i].thread, NULL) != 0)
-			status = -1;
+			status = FALSE;
 		i++;
 	}
-	if (status == -1)
-		return (print_error(10, "thread join failed", 0));
+	if (status == FALSE)
+		return (print_error(ERR_THREAD_JOIN, 0));
+	return (TRUE);
+}
+
+static t_bool	destroy_mutexes(t_memory_manager *manager, int count)
+{
+	int		i;
+	t_bool	status;
+
 	i = 0;
+	status = TRUE;
 	while (i < count)
 	{
 		if (pthread_mutex_destroy(&manager->array_dongle[i].mutex) != 0)
-			status = -1;
+			status = FALSE;
 		i++;
 	}
-	if (status == -1)
-		return (print_error(10, "mutex destruction failed", 0));
-	return (0);
+	if (status == FALSE)
+		return (print_error(ERR_MUTEX_DESTROY, 0));
+	return (TRUE);
 }
 
-static int	run_codexion(const t_config *config)
+static t_bool	run_codexion(const t_config *config)
 {
 	t_memory_manager	manager;
+	t_bool				status;
+	int					i;
 
-	if (memory_manager_init(&manager, config->number_of_coders) == -1)
-		return (1);
-	if (init_codexion(&manager, config) == -1)
+	if (memory_manager_init(&manager, config->number_of_coders) == FALSE)
+		return (FALSE);
+	if (init_codexion(&manager, config) == FALSE)
 	{
 		free_memory_manager(&manager);
-		return (1);
+		return (FALSE);
 	}
-	if (join_and_destroy(&manager, config->number_of_coders) == -1)
-		return (1);
+	if (join_threads(&manager, config->number_of_coders) == FALSE)
+		return (FALSE);
+	status = destroy_mutexes(&manager, config->number_of_coders);
+	i = -1;
+	while (++i < config->number_of_coders)
+	{
+		if (manager.array_coder[i].failed == TRUE)
+			status = FALSE;
+	}
 	free_memory_manager(&manager);
-	return (0);
+	return (status);
 }
 
 int	main(int argc, char **argv)
@@ -65,15 +83,12 @@ int	main(int argc, char **argv)
 
 	if (argc != 9)
 	{
-		print_error(4, ERR_ARG_COUNT_MSG, 0);
-		return (1);
+		print_error(ERR_ARG_COUNT, 0);
+		return (EXIT_FAILURE);
 	}
-	if (parse(argc, argv, &config) == -1)
-		return (1);
-	if (config.number_of_coders == 0)
-	{
-		print_error(6, ERR_ZERO_MSG, 1);
-		return (1);
-	}
-	return (run_codexion(&config));
+	if (parse(argc, argv, &config) == FALSE)
+		return (EXIT_FAILURE);
+	if (run_codexion(&config) == FALSE)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }

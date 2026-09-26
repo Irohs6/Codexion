@@ -23,7 +23,7 @@ typedef struct s_memory_manager
 }	t_memory_manager;
 
 void	*ft_calloc(size_t nb_memb, size_t size);
-int		memory_manager_init(t_memory_manager *manager, int nb_coder);
-int		free_memory_manager(t_memory_manager *manager);
+t_bool	memory_manager_init(t_memory_manager *manager, int nb_coder);
+t_bool	free_memory_manager(t_memory_manager *manager);
 
 #endif // MEMORY_MANAGER_H
