@@ -13,6 +13,7 @@ SRCS = \
 		simulation.c \
 		requests.c \
 		error.c \
+		log.c \
 		memory_manager.c \
 		heap.c \
 		main.c
@@ -25,6 +26,7 @@ HEADERS = \
 		codexion.h \
 		config.h \
 		error.h \
+		log.h \
 		heap.h \
 		memory_manager.h \
 		parser.h \

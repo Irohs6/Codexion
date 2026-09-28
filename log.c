@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   config.h                                           :+:      :+:    :+:   */
+/*   log.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/17 14:56:17 by iroh              #+#    #+#             */
-/*   Updated: 2026/09/28 13:45:57 by iroh             ###   ########.fr       */
+/*   Created: 2026/09/28 14:06:31 by iroh              #+#    #+#             */
+/*   Updated: 2026/09/28 14:15:58 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONFIG_H
-# define CONFIG_H
+#include <pthread.h>
+#include "log.h"
+#include "utils.h"
+#include "codexion.h"
 
-typedef struct s_config
+t_bool	display_log(pthread_mutex_t *mutex, t_coder *coder, const char *log)
 {
-	int				number_of_coders;
-	int				time_to_burnout;
-	int				time_to_compile;
-	int				time_to_debug;
-	int				time_to_refactor;
-	int				nb_of_cp_required;
-	int				dongle_cooldown;
-	const char		*scheduler;
-}	t_config;
-
-#endif
+	pthread_mutex_lock(mutex);
+	printf("%llu %d %s\n",
+		(unsigned long long)(now_ms() - coder->start_time),
+		coder->id, log);
+	pthread_mutex_unlock(mutex);
+	return (TRUE);
+}

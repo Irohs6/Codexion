@@ -6,7 +6,7 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/23 14:31:43 by gacattan          #+#    #+#             */
-/*   Updated: 2026/09/25 22:07:13 by iroh             ###   ########.fr       */
+/*   Updated: 2026/09/28 13:40:52 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ t_bool	register_requests(t_coder *coder)
 	t_request	request;
 	t_bool		status;
 
-	if (!coder || !coder->config || !coder->config->scheduler
-		|| !coder->dongle_1 || !coder->dongle_2)
+	if (!coder || !coder->dongle_1 || !coder->dongle_2)
 		return (print_error(ERR_NULL, 0));
 	request.coder = coder;
 	request.arrival_order = 0;

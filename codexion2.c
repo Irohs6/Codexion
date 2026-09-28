@@ -6,13 +6,14 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/23 16:21:20 by gacattan          #+#    #+#             */
-/*   Updated: 2026/09/26 19:04:49 by iroh             ###   ########.fr       */
+/*   Updated: 2026/09/28 14:14:23 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 #include "memory_manager.h"
 #include "heap.h"
+#include "log.h"
 #include <sys/time.h>
 
 uint64_t	now_ms(void)
@@ -58,14 +59,9 @@ void	compile(t_coder *coder)
 	if (!coder)
 		return ;
 	coder->last_time_compile_start = now_ms();
-	printf("%llu %d has taken a dongle\n%llu %d has taken a dongle\n"
-		"%llu %d is compiling\n",
-		(unsigned long long)(coder->last_time_compile_start
-			- coder->start_time), coder->id,
-		(unsigned long long)(coder->last_time_compile_start
-			- coder->start_time), coder->id,
-		(unsigned long long)(coder->last_time_compile_start
-			- coder->start_time), coder->id);
+	display_log(coder->log_mutex, coder, MSG_DONGLE);
+	display_log(coder->log_mutex, coder, MSG_DONGLE);
+	display_log(coder->log_mutex, coder, MSG_COMPILE);
 	usleep(coder->config->time_to_compile * 1000);
 	pthread_mutex_lock(&coder->dongle_1->mutex);
 	pthread_mutex_lock(&coder->dongle_2->mutex);

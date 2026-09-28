@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   config.h                                           :+:      :+:    :+:   */
+/*   log.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/17 14:56:17 by iroh              #+#    #+#             */
-/*   Updated: 2026/09/28 13:45:57 by iroh             ###   ########.fr       */
+/*   Created: 2026/09/28 14:05:14 by iroh              #+#    #+#             */
+/*   Updated: 2026/09/28 14:13:03 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONFIG_H
-# define CONFIG_H
+#ifndef LOG_H
+# define LOG_H
 
-typedef struct s_config
-{
-	int				number_of_coders;
-	int				time_to_burnout;
-	int				time_to_compile;
-	int				time_to_debug;
-	int				time_to_refactor;
-	int				nb_of_cp_required;
-	int				dongle_cooldown;
-	const char		*scheduler;
-}	t_config;
+# include "codexion.h"
 
+# define MSG_DONGLE "has taken a dongle"
+# define MSG_COMPILE "is compiling"
+# define MSG_DEBUG "is debugging"
+# define MSG_REFACTOR "is refactoring"
+# define MSG_BURNOUT "burned out"
+
+t_bool	display_log(pthread_mutex_t *mutex, t_coder *coder, const char *log);
 #endif

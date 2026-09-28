@@ -11,19 +11,16 @@
 /* ************************************************************************** */
 
 #include "codexion.h"
-#include "error.h"
-
+#include "log.h"
 
 void	debug(t_coder *coder)
 {
-	printf("%llu %d is debugging\n",
-		(unsigned long long)now_ms() - coder->start_time, coder->id);
+	display_log(coder->log_mutex, coder, MSG_DEBUG);
 	usleep(coder->config->time_to_debug * 1000);
 }
 
 void	refactor(t_coder *coder)
 {
-	printf("%llu %d is refactoring\n",
-		(unsigned long long)now_ms() - coder->start_time, coder->id);
+	display_log(coder->log_mutex, coder, MSG_REFACTOR);
 	usleep(coder->config->time_to_refactor * 1000);
 }

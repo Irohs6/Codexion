@@ -6,7 +6,7 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/23 14:31:43 by gacattan          #+#    #+#             */
-/*   Updated: 2026/09/25 22:07:13 by iroh             ###   ########.fr       */
+/*   Updated: 2026/09/28 12:45:08 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_bool	heap_push(t_heap *heap, t_request request, const char *scheduler)
 {
 	t_request		temp;
 
-	if (!heap || !scheduler || !request.coder)
+	if (!heap || !request.coder)
 		return (print_error(ERR_NULL, 0));
 	if (heap->size >= 2)
 		return (print_error(ERR_HEAP_FULL, 0));

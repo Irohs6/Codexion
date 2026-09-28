@@ -6,7 +6,7 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/20 16:32:40 by iroh              #+#    #+#             */
-/*   Updated: 2026/09/25 21:58:05 by iroh             ###   ########.fr       */
+/*   Updated: 2026/09/28 14:21:25 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,12 @@ static void	init_dongle_id(t_memory_manager *manager, int nb_coders, int i)
 	}
 }
 
-t_bool	init_codexion(t_memory_manager *manager, const t_config *config)
+t_bool	init_codexion(t_memory_manager *manager, const t_config *config,
+	pthread_mutex_t *log_mutex)
 {
 	int	i;
 
-	if (!manager || !config)
+	if (!manager || !config || !log_mutex)
 		return (print_error(ERR_NULL, 0));
 	if (!manager->array_coder || !manager->array_dongle)
 		return (print_error(ERR_NULL, 0));
@@ -52,7 +53,7 @@ t_bool	init_codexion(t_memory_manager *manager, const t_config *config)
 	if (init_mutexes(manager, config->number_of_coders) == FALSE)
 		return (FALSE);
 	init_start_time(manager, config->number_of_coders);
-	if (create_threads(manager, config->number_of_coders) == FALSE)
+	if (create_threads(manager, config->number_of_coders, log_mutex) == FALSE)
 		return (FALSE);
 	return (TRUE);
 }
@@ -76,15 +77,17 @@ static void	clean_thread_failure(t_memory_manager *manager,
 	}
 }
 
-t_bool	create_threads(struct s_memory_manager *manager, int nb_coder)
+t_bool	create_threads(struct s_memory_manager *manager,
+	int nb_coder, pthread_mutex_t *log_mutex)
 {
 	int	i;
 
 	i = 0;
-	if (!manager || !manager->array_coder)
+	if (!manager || !manager->array_coder || !log_mutex)
 		return (print_error(ERR_NULL, 0));
 	while (i < nb_coder)
 	{
+		manager->array_coder[i].log_mutex = log_mutex;
 		if (pthread_create(&manager->array_coder[i].thread, NULL,
 				start_coder_thread, &manager->array_coder[i]) != 0)
 		{

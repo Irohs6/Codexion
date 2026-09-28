@@ -6,7 +6,7 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/20 15:27:00 by iroh              #+#    #+#             */
-/*   Updated: 2026/09/26 19:05:34 by iroh             ###   ########.fr       */
+/*   Updated: 2026/09/28 13:19:47 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_coder
 	uint64_t		deadline;
 	uint64_t		start_time;
 	pthread_t		thread;
+	pthread_mutex_t	*log_mutex;
 	const t_config	*config;
 	t_dongle		*dongle_1;
 	t_dongle		*dongle_2;
@@ -48,8 +49,9 @@ struct s_dongle
 };
 
 t_bool		init_codexion(struct s_memory_manager *manager,
-				const t_config *config);
-t_bool		create_threads(struct s_memory_manager *manager, int nb_coder);
+				const t_config *config, pthread_mutex_t *log_mutex);
+t_bool		create_threads(struct s_memory_manager *manager,
+				int nb_coder, pthread_mutex_t *log_mutex);
 t_bool		init_mutexes(struct s_memory_manager *manager, int nb_dongle);
 t_bool		register_requests(t_coder *coder);
 uint64_t	now_ms(void);
@@ -58,6 +60,6 @@ void		compile(t_coder *coder);
 void		*start_coder_thread(void *arg);
 void		refactor(t_coder *coder);
 void		debug(t_coder *coder);
-t_bool		cooldown_ready(t_coder *coder);	
+t_bool		cooldown_ready(t_coder *coder);
 
 #endif
