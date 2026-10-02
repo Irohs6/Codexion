@@ -6,7 +6,7 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/20 15:27:00 by iroh              #+#    #+#             */
-/*   Updated: 2026/09/28 13:19:47 by iroh             ###   ########.fr       */
+/*   Updated: 2026/10/02 15:41:37 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "utils.h"
 # include "config.h"
 # include "heap.h"
+# include "monitoring.h"
 
 typedef struct s_dongle	t_dongle;
 struct					s_memory_manager;
@@ -33,6 +34,7 @@ typedef struct s_coder
 	uint64_t		start_time;
 	pthread_t		thread;
 	pthread_mutex_t	*log_mutex;
+	t_monitoring	*monitoring;
 	const t_config	*config;
 	t_dongle		*dongle_1;
 	t_dongle		*dongle_2;
@@ -54,12 +56,14 @@ t_bool		create_threads(struct s_memory_manager *manager,
 				int nb_coder, pthread_mutex_t *log_mutex);
 t_bool		init_mutexes(struct s_memory_manager *manager, int nb_dongle);
 t_bool		register_requests(t_coder *coder);
+t_bool		register_initial_requests(struct s_memory_manager *manager,
+				int count);
 uint64_t	now_ms(void);
-void		init_start_time(struct s_memory_manager *manager, int count);
-void		compile(t_coder *coder);
 void		*start_coder_thread(void *arg);
-void		refactor(t_coder *coder);
-void		debug(t_coder *coder);
-t_bool		cooldown_ready(t_coder *coder);
+
+t_bool		run_codexion(const t_config *config, pthread_mutex_t *log_mutex);
+t_bool		join_threads(struct s_memory_manager *manager, int count);
+t_bool		destroy_mutexes(struct s_memory_manager *manager, int count);
+t_bool		take_dongle(t_coder *coder);
 
 #endif

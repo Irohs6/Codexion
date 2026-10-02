@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_manager.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 12:41:02 by iroh              #+#    #+#             */
-/*   Updated: 2026/09/23 15:55:37 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/10/02 15:43:54 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@
 
 typedef struct s_memory_manager
 {
-	t_coder		*array_coder;
-	t_dongle	*array_dongle;
+	t_coder			*array_coder;
+	t_dongle		*array_dongle;
+	t_monitoring	*monitoring;
 }	t_memory_manager;
 
 void	*ft_calloc(size_t nb_memb, size_t size);

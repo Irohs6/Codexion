@@ -6,7 +6,7 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/14 14:27:20 by gacattan          #+#    #+#             */
-/*   Updated: 2026/09/18 15:56:08 by iroh             ###   ########.fr       */
+/*   Updated: 2026/10/02 16:04:50 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define ERR_HEAP_FULL_MSG "request heap is full"
 # define ERR_HEAP_EMPTY_MSG "request heap is empty"
 # define ERR_COUNT_MSG "resource count must be positive"
+# define MSG_BURNOUT "burned out"
 
 typedef enum e_error
 {

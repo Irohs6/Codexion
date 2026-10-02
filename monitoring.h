@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   codexion3.c                                        :+:      :+:    :+:   */
+/*   monitoring.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/26 19:03:49 by iroh              #+#    #+#             */
-/*   Updated: 2026/09/28 14:06:21 by iroh             ###   ########.fr       */
+/*   Created: 2026/09/30 14:39:48 by iroh              #+#    #+#             */
+/*   Updated: 2026/10/02 15:56:08 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "codexion.h"
+#ifndef MONITORING_H
+# define MONITORING_H
 
-t_bool	cooldown_ready(t_coder *coder)
+# include <pthread.h>
+# include "utils.h"
+
+typedef struct s_monitoring
 {
-	uint64_t	now;
+	t_bool			stop;
+	pthread_mutex_t	mutex;
+	pthread_t		monitor_thread;
+}	t_monitoring;
 
-	now = now_ms();
-	if (now - coder->dongle_1->last_release_time
-		< (uint64_t)coder->config->dongle_cooldown)
-		return (FALSE);
-	if (now - coder->dongle_2->last_release_time
-		< (uint64_t)coder->config->dongle_cooldown)
-		return (FALSE);
-	return (TRUE);
-}
+#endif // MONITORING_H

@@ -5,18 +5,20 @@ NAME = codexion
 OBJ_DIR = obj
 
 SRCS = \
-		parser.c \
-		utils.c \
-		codexion.c \
-		codexion2.c \
-		codexion3.c \
+		main.c \
 		simulation.c \
+		init.c \
+		threads.c \
+		coder.c \
+		dongle.c \
+		time_utils.c \
 		requests.c \
-		error.c \
-		log.c \
-		memory_manager.c \
 		heap.c \
-		main.c
+		log.c \
+		error.c \
+		parser.c \
+		memory_manager.c \
+		utils.c
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -pthread

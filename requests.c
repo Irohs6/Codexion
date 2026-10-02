@@ -6,12 +6,13 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/23 14:31:43 by gacattan          #+#    #+#             */
-/*   Updated: 2026/09/28 13:40:52 by iroh             ###   ########.fr       */
+/*   Updated: 2026/09/28 16:15:46 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 #include "error.h"
+#include "memory_manager.h"
 
 static t_bool	push_requests(t_coder *coder, t_request request)
 {
@@ -39,10 +40,36 @@ t_bool	register_requests(t_coder *coder)
 		+ coder->config->time_to_burnout;
 	pthread_mutex_lock(&coder->dongle_1->mutex);
 	if (coder->dongle_1 != coder->dongle_2)
+	{
 		pthread_mutex_lock(&coder->dongle_2->mutex);
-	status = push_requests(coder, request);
-	if (coder->dongle_1 != coder->dongle_2)
+		status = push_requests(coder, request);
 		pthread_mutex_unlock(&coder->dongle_2->mutex);
+	}
+	else
+		status = push_requests(coder, request);
 	pthread_mutex_unlock(&coder->dongle_1->mutex);
 	return (status);
+}
+
+t_bool	register_initial_requests(t_memory_manager *manager, int count)
+{
+	int	parity;
+	int	i;
+
+	if (!manager || !manager->array_coder)
+		return (print_error(ERR_NULL, 0));
+	parity = 0;
+	while (parity < 2)
+	{
+		i = parity;
+		while (i < count)
+		{
+			if (manager->array_coder[i].config->nb_of_cp_required > 0
+				&& register_requests(&manager->array_coder[i]) == FALSE)
+				return (FALSE);
+			i += 2;
+		}
+		parity++;
+	}
+	return (TRUE);
 }
