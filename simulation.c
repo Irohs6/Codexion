@@ -13,6 +13,7 @@
 #include "codexion.h"
 #include "memory_manager.h"
 #include "monitoring.h"
+#include "error.h"
 
 static t_bool	finish_codexion(t_memory_manager *manager,
 	const t_config *config)
@@ -20,6 +21,8 @@ static t_bool	finish_codexion(t_memory_manager *manager,
 	t_bool	status;
 	int		i;
 
+	if (pthread_join(manager->monitoring->monitor_thread, NULL) != 0)
+		return (print_error(ERR_THREAD_JOIN, 0));
 	if (join_threads(manager, config->number_of_coders) == FALSE)
 		return (FALSE);
 	status = destroy_mutexes(manager, config->number_of_coders);

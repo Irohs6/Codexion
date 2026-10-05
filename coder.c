@@ -11,17 +11,28 @@
 /* ************************************************************************** */
 
 #include "codexion.h"
+#include "monitoring.h"
 #include "log.h"
+
 
 static void	compile(t_coder *coder)
 {
+	t_bool	completed;
+
 	if (!coder)
 		return ;
+	pthread_mutex_lock(&coder->monitoring->mutex);
+	if (coder->monitoring->stop == TRUE)
+	{
+		pthread_mutex_unlock(&coder->monitoring->mutex);
+		return ;
+	}
 	coder->last_time_compile_start = now_ms();
+	pthread_mutex_unlock(&coder->monitoring->mutex);
 	display_log(coder->log_mutex, coder, MSG_DONGLE);
 	display_log(coder->log_mutex, coder, MSG_DONGLE);
 	display_log(coder->log_mutex, coder, MSG_COMPILE);
-	usleep(coder->config->time_to_compile * 1000);
+	completed = wait_phase(coder, coder->config->time_to_compile);
 	pthread_mutex_lock(&coder->dongle_1->mutex);
 	pthread_mutex_lock(&coder->dongle_2->mutex);
 	coder->dongle_1->last_release_time = now_ms();
@@ -30,19 +41,27 @@ static void	compile(t_coder *coder)
 	coder->dongle_2->is_available = TRUE;
 	pthread_mutex_unlock(&coder->dongle_1->mutex);
 	pthread_mutex_unlock(&coder->dongle_2->mutex);
+	if (completed == FALSE)
+		return ;
+	pthread_mutex_lock(&coder->monitoring->mutex);
 	coder->nb_compile++;
+	pthread_mutex_unlock(&coder->monitoring->mutex);
 }
 
-static void	debug(t_coder *coder)
+static t_bool	debug(t_coder *coder)
 {
+	if (monitoring_stoped(coder->monitoring) == TRUE)
+		return (FALSE);
 	display_log(coder->log_mutex, coder, MSG_DEBUG);
-	usleep(coder->config->time_to_debug * 1000);
+	return (wait_phase(coder, coder->config->time_to_debug));
 }
 
-static void	refactor(t_coder *coder)
+static t_bool	refactor(t_coder *coder)
 {
+	if (monitoring_stoped(coder->monitoring) == TRUE)
+		return (FALSE);
 	display_log(coder->log_mutex, coder, MSG_REFACTOR);
-	usleep(coder->config->time_to_refactor * 1000);
+	return (wait_phase(coder, coder->config->time_to_refactor));
 }
 
 void	*start_coder_thread(void *arg)
@@ -50,18 +69,26 @@ void	*start_coder_thread(void *arg)
 	t_coder	*coder;
 
 	coder = arg;
-	while (coder->nb_compile < coder->config->nb_of_cp_required)
+	while (monitoring_stoped(coder->monitoring) == FALSE
+		&& coder->nb_compile < coder->config->nb_of_cp_required)
 	{
 		if (coder->nb_compile > 0 && register_requests(coder) == FALSE)
 		{
 			coder->failed = TRUE;
 			return (NULL);
 		}
-		while (take_dongle(coder) == FALSE)
+		while (monitoring_stoped(coder->monitoring) == FALSE
+			&& take_dongle(coder) == FALSE)
 			usleep(10);
+		if (monitoring_stoped(coder->monitoring) == TRUE)
+			return (NULL);
 		compile(coder);
-		debug(coder);
-		refactor(coder);
+		if (coder->nb_compile >= coder->config->nb_of_cp_required)
+			return (NULL);
+		if (debug(coder) == FALSE)
+			return (NULL);
+		if (refactor(coder) == FALSE)
+			return (NULL);
 	}
 	return (NULL);
 }

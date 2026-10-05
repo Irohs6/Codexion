@@ -6,7 +6,7 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/30 14:36:46 by iroh              #+#    #+#             */
-/*   Updated: 2026/10/02 16:15:51 by iroh             ###   ########.fr       */
+/*   Updated: 2026/10/05 22:53:01 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "error.h"
 #include "log.h"
 
-static t_bool	monitoring_stoped(t_monitoring *monitoring)
+t_bool	monitoring_stoped(t_monitoring *monitoring)
 {
 	t_bool	stop;
 
@@ -33,21 +33,6 @@ void	stop_monitoring(t_monitoring *monitoring)
 	pthread_mutex_unlock(&monitoring->mutex);
 }
 
-static int	check_all_deadline(t_coder *array_coder, int nb_coder)
-{
-	int	i;
-
-	i = 0;
-	while (i < nb_coder)
-	{
-		if (now_ms() >= array_coder[i].last_time_compile_start
-			+ array_coder[i].config->time_to_burnout)
-			return (array_coder[i].id);
-		i++;
-	}
-	return (FALSE);
-}
-
 void	*monitoring_function(void *arg)
 {
 	int					burnout_id;
@@ -59,15 +44,18 @@ void	*monitoring_function(void *arg)
 	manager = (t_memory_manager *)arg;
 	monitoring = manager->monitoring;
 	array_coder = manager->array_coder;
-
-
 	while (monitoring_stoped(manager->monitoring) == FALSE)
 	{
+		if (all_compiles_done(array_coder,
+				array_coder[0].config->number_of_coders) == TRUE)
+		{
+			stop_monitoring(monitoring);
+			break ;
+		}
 		burnout_id = check_all_deadline(array_coder,
 				array_coder[0].config->number_of_coders);
 		if (burnout_id != FALSE)
 		{
-			stop_monitoring(monitoring);
 			display_log(array_coder[burnout_id - 1].log_mutex,
 				&array_coder[burnout_id - 1], MSG_BURNOUT);
 			break ;

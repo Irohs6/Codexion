@@ -6,7 +6,7 @@
 /*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/20 15:27:00 by iroh              #+#    #+#             */
-/*   Updated: 2026/10/02 15:41:37 by iroh             ###   ########.fr       */
+/*   Updated: 2026/10/05 16:42:34 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,6 @@ t_bool		run_codexion(const t_config *config, pthread_mutex_t *log_mutex);
 t_bool		join_threads(struct s_memory_manager *manager, int count);
 t_bool		destroy_mutexes(struct s_memory_manager *manager, int count);
 t_bool		take_dongle(t_coder *coder);
+t_bool		wait_phase(t_coder *coder, uint64_t duration_ms);
 
 #endif

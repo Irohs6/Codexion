@@ -18,6 +18,8 @@ SRCS = \
 		error.c \
 		parser.c \
 		memory_manager.c \
+		monitoring.c \
+		monitoring_checks.c \
 		utils.c
 
 CC = cc
@@ -32,7 +34,8 @@ HEADERS = \
 		heap.h \
 		memory_manager.h \
 		parser.h \
-		utils.h
+		utils.h \
+		monitoring.h
 
 all: $(NAME)
 
