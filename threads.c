@@ -15,18 +15,18 @@
 #include "error.h"
 
 static void	clean_thread_failure(t_memory_manager *manager,
-	int created, int count)
+	int nb_created, int nb_coder)
 {
 	int	i;
 
 	i = 0;
-	while (i < created)
+	while (i < nb_created)
 	{
 		pthread_join(manager->array_coder[i].thread, NULL);
 		i++;
 	}
 	i = 0;
-	while (i < count)
+	while (i < nb_coder)
 	{
 		pthread_mutex_destroy(&manager->array_dongle[i].mutex);
 		i++;

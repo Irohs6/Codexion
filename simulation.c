@@ -26,6 +26,11 @@ static t_bool	finish_codexion(t_memory_manager *manager,
 	if (join_threads(manager, config->number_of_coders) == FALSE)
 		return (FALSE);
 	status = destroy_mutexes(manager, config->number_of_coders);
+
+	pthread_cond_destroy(&manager->monitoring->resource_cond);
+	pthread_mutex_destroy(&manager->monitoring->resource_mutex);
+	pthread_mutex_destroy(&manager->monitoring->mutex);
+
 	i = -1;
 	while (++i < config->number_of_coders)
 	{
@@ -43,6 +48,8 @@ t_bool	run_codexion(const t_config *config, pthread_mutex_t *log_mutex)
 
 	monitoring.stop = FALSE;
 	pthread_mutex_init(&monitoring.mutex, NULL);
+	pthread_mutex_init(&monitoring.resource_mutex, NULL);
+	pthread_cond_init(&monitoring.resource_cond, NULL);
 	manager.monitoring = &monitoring;
 	if (memory_manager_init(&manager, config->number_of_coders) == FALSE)
 		return (FALSE);

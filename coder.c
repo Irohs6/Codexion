@@ -41,6 +41,9 @@ static void	compile(t_coder *coder)
 	coder->dongle_2->is_available = TRUE;
 	pthread_mutex_unlock(&coder->dongle_1->mutex);
 	pthread_mutex_unlock(&coder->dongle_2->mutex);
+	pthread_mutex_lock(&coder->monitoring->resource_mutex);
+	pthread_cond_broadcast(&coder->monitoring->resource_cond);
+	pthread_mutex_unlock(&coder->monitoring->resource_mutex);
 	if (completed == FALSE)
 		return ;
 	pthread_mutex_lock(&coder->monitoring->mutex);
@@ -79,7 +82,13 @@ void	*start_coder_thread(void *arg)
 		}
 		while (monitoring_stoped(coder->monitoring) == FALSE
 			&& take_dongle(coder) == FALSE)
-			usleep(10);
+		{
+			pthread_mutex_lock(&coder->monitoring->resource_mutex);
+			pthread_cond_wait(&coder->monitoring->resource_cond,
+				&coder->monitoring->resource_mutex);
+			usleep(coder->config->dongle_cooldown * 1000);
+			pthread_mutex_unlock(&coder->monitoring->resource_mutex);
+		}
 		if (monitoring_stoped(coder->monitoring) == TRUE)
 			return (NULL);
 		compile(coder);

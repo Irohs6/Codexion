@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/30 14:36:46 by iroh              #+#    #+#             */
-/*   Updated: 2026/10/05 22:53:01 by iroh             ###   ########.fr       */
+/*   Updated: 2026/10/06 14:51:22 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ void	stop_monitoring(t_monitoring *monitoring)
 {
 	pthread_mutex_lock(&monitoring->mutex);
 	monitoring->stop = TRUE;
+	pthread_mutex_lock(&monitoring->resource_mutex);
+	pthread_cond_broadcast(&monitoring->resource_cond);
+	pthread_mutex_unlock(&monitoring->resource_mutex);
 	pthread_mutex_unlock(&monitoring->mutex);
 }
 

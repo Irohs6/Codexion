@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/30 14:39:48 by iroh              #+#    #+#             */
-/*   Updated: 2026/10/02 17:10:53 by iroh             ###   ########.fr       */
+/*   Updated: 2026/10/06 13:08:02 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef struct s_monitoring
 	t_bool			stop;
 	pthread_mutex_t	mutex;
 	pthread_t		monitor_thread;
+	pthread_mutex_t	resource_mutex;
+	pthread_cond_t	resource_cond;
 }	t_monitoring;
 
 t_bool	monitoring_stoped(t_monitoring *monitoring);
