@@ -86,8 +86,8 @@ void	*start_coder_thread(void *arg)
 			pthread_mutex_lock(&coder->monitoring->resource_mutex);
 			pthread_cond_wait(&coder->monitoring->resource_cond,
 				&coder->monitoring->resource_mutex);
-			usleep(coder->config->dongle_cooldown * 1000);
 			pthread_mutex_unlock(&coder->monitoring->resource_mutex);
+			usleep(coder->config->dongle_cooldown * 1000);
 		}
 		if (monitoring_stoped(coder->monitoring) == TRUE)
 			return (NULL);
