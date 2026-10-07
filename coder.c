@@ -17,12 +17,14 @@
 
 static void	compile(t_coder *coder)
 {
-	t_bool	completed;
+	t_bool		completed;
+	uint64_t	now;
 
-	if (!coder)
-		return ;
+	now = now_ms();
 	pthread_mutex_lock(&coder->monitoring->mutex);
-	if (coder->monitoring->stop == TRUE)
+	if (coder->monitoring->stop == TRUE
+		|| now >= coder->last_time_compile_start
+		+ coder->config->time_to_burnout)
 	{
 		pthread_mutex_unlock(&coder->monitoring->mutex);
 		return ;

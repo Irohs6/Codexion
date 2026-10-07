@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring_checks.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/02 16:51:44 by iroh              #+#    #+#             */
-/*   Updated: 2026/10/05 22:47:03 by iroh             ###   ########.fr       */
+/*   Updated: 2026/10/07 12:31:48 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	check_all_deadline(t_coder *array_coder, int nb_coder)
 		if (now_ms() >= array_coder[i].last_time_compile_start
 			+ array_coder[i].config->time_to_burnout)
 		{
-			array_coder[0].monitoring->stop = TRUE;
 			pthread_mutex_unlock(&array_coder[0].monitoring->mutex);
 			return (array_coder[i].id);
 		}

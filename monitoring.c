@@ -6,7 +6,7 @@
 /*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/30 14:36:46 by iroh              #+#    #+#             */
-/*   Updated: 2026/10/06 14:51:22 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/10/07 12:33:12 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	stop_monitoring(t_monitoring *monitoring)
 {
 	pthread_mutex_lock(&monitoring->mutex);
 	monitoring->stop = TRUE;
+	pthread_mutex_unlock(&monitoring->mutex);
 	pthread_mutex_lock(&monitoring->resource_mutex);
 	pthread_cond_broadcast(&monitoring->resource_cond);
 	pthread_mutex_unlock(&monitoring->resource_mutex);
-	pthread_mutex_unlock(&monitoring->mutex);
 }
 
 void	*monitoring_function(void *arg)
@@ -59,6 +59,7 @@ void	*monitoring_function(void *arg)
 				array_coder[0].config->number_of_coders);
 		if (burnout_id != FALSE)
 		{
+			stop_monitoring(monitoring);
 			display_log(array_coder[burnout_id - 1].log_mutex,
 				&array_coder[burnout_id - 1], MSG_BURNOUT);
 			break ;
