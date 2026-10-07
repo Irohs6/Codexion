@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/15 14:14:31 by gacattan          #+#    #+#             */
-/*   Updated: 2026/09/26 18:09:15 by iroh             ###   ########.fr       */
+/*   Updated: 2026/10/07 15:27:49 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ t_bool	parse(int argc, char **argv, t_config *config)
 	if (ft_is_str_valid(argv[index], index) == FALSE)
 		return (FALSE);
 	config->scheduler = argv[index];
-	if (config->number_of_coders == 0)
+	if (config->number_of_coders == 0 || config->nb_of_cp_required == 0)
 		return (print_error(ERR_ZERO, 1));
 	return (TRUE);
 }

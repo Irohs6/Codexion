@@ -15,7 +15,7 @@
 #include "log.h"
 
 
-static void	compile(t_coder *coder)
+static t_bool	compile(t_coder *coder)
 {
 	t_bool		completed;
 	uint64_t	now;
@@ -27,7 +27,7 @@ static void	compile(t_coder *coder)
 		+ coder->config->time_to_burnout)
 	{
 		pthread_mutex_unlock(&coder->monitoring->mutex);
-		return ;
+		return (FALSE);
 	}
 	coder->last_time_compile_start = now_ms();
 	pthread_mutex_unlock(&coder->monitoring->mutex);
@@ -45,10 +45,11 @@ static void	compile(t_coder *coder)
 	pthread_cond_broadcast(&coder->monitoring->resource_cond);
 	pthread_mutex_unlock(&coder->monitoring->resource_mutex);
 	if (completed == FALSE)
-		return ;
+		return (FALSE);
 	pthread_mutex_lock(&coder->monitoring->mutex);
 	coder->nb_compile++;
 	pthread_mutex_unlock(&coder->monitoring->mutex);
+	return (TRUE);
 }
 
 static t_bool	debug(t_coder *coder)
@@ -101,7 +102,8 @@ void	*start_coder_thread(void *arg)
 		pthread_mutex_unlock(&coder->monitoring->resource_mutex);
 		if (monitoring_stoped(coder->monitoring) == TRUE)
 			return (NULL);
-		compile(coder);
+		if (compile(coder) == FALSE)
+			return (NULL);
 		if (coder->nb_compile >= coder->config->nb_of_cp_required)
 			return (NULL);
 		if (debug(coder) == FALSE)

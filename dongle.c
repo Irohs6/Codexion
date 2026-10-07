@@ -40,6 +40,8 @@ uint64_t	get_cooldown_wait(t_coder *coder)
 	t_request	request_2;
 	uint64_t	wait_time;
 
+	if (coder->dongle_1->id == coder->dongle_2->id)
+		return (0);
 	wait_time = 0;
 	pthread_mutex_lock(&coder->dongle_1->mutex);
 	pthread_mutex_lock(&coder->dongle_2->mutex);
