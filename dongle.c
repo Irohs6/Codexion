@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dongle.c                                         :+:      :+:    :+:   */
+/*   dongle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/23 16:21:20 by gacattan          #+#    #+#             */
-/*   Updated: 2026/09/30 13:49:24 by iroh             ###   ########.fr       */
+/*   Created: 2026/10/07 15:54:26 by gacattan          #+#    #+#             */
+/*   Updated: 2026/10/07 15:54:32 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,22 @@ t_bool	take_dongle(t_coder *coder)
 	pthread_mutex_unlock(&coder->dongle_1->mutex);
 	pthread_mutex_unlock(&coder->dongle_2->mutex);
 	return (TRUE);
+}
+
+void	release_dongles(t_coder *coder)
+{
+	uint64_t	now;
+
+	now = now_ms();
+	pthread_mutex_lock(&coder->dongle_1->mutex);
+	pthread_mutex_lock(&coder->dongle_2->mutex);
+	coder->dongle_1->last_release_time = now;
+	coder->dongle_2->last_release_time = now;
+	coder->dongle_1->is_available = TRUE;
+	coder->dongle_2->is_available = TRUE;
+	pthread_mutex_unlock(&coder->dongle_1->mutex);
+	pthread_mutex_unlock(&coder->dongle_2->mutex);
+	pthread_mutex_lock(&coder->monitoring->resource_mutex);
+	pthread_cond_broadcast(&coder->monitoring->resource_cond);
+	pthread_mutex_unlock(&coder->monitoring->resource_mutex);
 }

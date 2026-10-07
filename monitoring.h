@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/30 14:39:48 by iroh              #+#    #+#             */
-/*   Updated: 2026/10/06 13:08:02 by gacattan         ###   ########.fr       */
+/*   Created: 2026/10/07 15:57:25 by gacattan          #+#    #+#             */
+/*   Updated: 2026/10/07 16:01:16 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <pthread.h>
 # include "utils.h"
-
 
 struct	s_memory_manager;
 struct	s_coder;

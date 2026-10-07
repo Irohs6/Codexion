@@ -11,6 +11,7 @@ SRCS = \
 		threads.c \
 		coder.c \
 		dongle.c \
+		dongle2.c \
 		time_utils.c \
 		requests.c \
 		heap.c \

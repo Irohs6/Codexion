@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time_utils.c                                     :+:      :+:    :+:   */
+/*   time_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/23 16:21:20 by gacattan          #+#    #+#             */
-/*   Updated: 2026/09/30 13:49:24 by iroh             ###   ########.fr       */
+/*   Created: 2026/10/07 15:58:08 by gacattan          #+#    #+#             */
+/*   Updated: 2026/10/07 15:58:16 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_bool	wait_phase(t_coder *coder, uint64_t duration_ms)
 	{
 		if (now_ms() - start >= duration_ms)
 			return (TRUE);
-		usleep(1000);
+		usleep(100);
 	}
 	return (FALSE);
 }

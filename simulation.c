@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   simulation.c                                     :+:      :+:    :+:   */
+/*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/26 17:24:02 by iroh              #+#    #+#             */
-/*   Updated: 2026/09/30 13:49:38 by iroh             ###   ########.fr       */
+/*   Created: 2026/10/07 15:57:54 by gacattan          #+#    #+#             */
+/*   Updated: 2026/10/07 16:01:38 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,9 @@ static t_bool	finish_codexion(t_memory_manager *manager,
 	if (join_threads(manager, config->number_of_coders) == FALSE)
 		return (FALSE);
 	status = destroy_mutexes(manager, config->number_of_coders);
-
 	pthread_cond_destroy(&manager->monitoring->resource_cond);
 	pthread_mutex_destroy(&manager->monitoring->resource_mutex);
 	pthread_mutex_destroy(&manager->monitoring->mutex);
-
 	i = -1;
 	while (++i < config->number_of_coders)
 	{
