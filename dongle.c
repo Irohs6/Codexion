@@ -12,18 +12,45 @@
 
 #include "codexion.h"
 
+static uint64_t	cooldown_remaining(t_coder *coder)
+{
+	uint64_t	last_release;
+	uint64_t	elapsed;
+
+	last_release = coder->dongle_1->last_release_time;
+	if (coder->dongle_2->last_release_time > last_release)
+		last_release = coder->dongle_2->last_release_time;
+	elapsed = now_ms() - last_release;
+	if (elapsed >= (uint64_t)coder->config->dongle_cooldown)
+		return (0);
+	return ((uint64_t)coder->config->dongle_cooldown - elapsed);
+}
+
 static t_bool	cooldown_ready(t_coder *coder)
 {
-	uint64_t	now;
-
-	now = now_ms();
-	if (now - coder->dongle_1->last_release_time
-		< (uint64_t)coder->config->dongle_cooldown)
-		return (FALSE);
-	if (now - coder->dongle_2->last_release_time
-		< (uint64_t)coder->config->dongle_cooldown)
+	if (cooldown_remaining(coder) > 0)
 		return (FALSE);
 	return (TRUE);
+}
+
+uint64_t	get_cooldown_wait(t_coder *coder)
+{
+	t_request	request_1;
+	t_request	request_2;
+	uint64_t	wait_time;
+
+	wait_time = 0;
+	pthread_mutex_lock(&coder->dongle_1->mutex);
+	pthread_mutex_lock(&coder->dongle_2->mutex);
+	request_1 = get_heap_first(&coder->dongle_1->heap);
+	request_2 = get_heap_first(&coder->dongle_2->heap);
+	if (request_1.coder == coder && request_2.coder == coder
+		&& coder->dongle_1->is_available == TRUE
+		&& coder->dongle_2->is_available == TRUE)
+		wait_time = cooldown_remaining(coder);
+	pthread_mutex_unlock(&coder->dongle_2->mutex);
+	pthread_mutex_unlock(&coder->dongle_1->mutex);
+	return (wait_time);
 }
 
 t_bool	take_dongle(t_coder *coder)

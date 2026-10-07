@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/20 15:27:00 by iroh              #+#    #+#             */
-/*   Updated: 2026/10/05 16:42:34 by iroh             ###   ########.fr       */
+/*   Updated: 2026/10/07 11:45:26 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ t_bool		join_threads(struct s_memory_manager *manager, int count);
 t_bool		destroy_mutexes(struct s_memory_manager *manager, int count);
 t_bool		take_dongle(t_coder *coder);
 t_bool		wait_phase(t_coder *coder, uint64_t duration_ms);
+uint64_t	get_cooldown_wait(t_coder *coder);
 
 #endif

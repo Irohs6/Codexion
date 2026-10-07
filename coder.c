@@ -29,9 +29,7 @@ static void	compile(t_coder *coder)
 	}
 	coder->last_time_compile_start = now_ms();
 	pthread_mutex_unlock(&coder->monitoring->mutex);
-	display_log(coder->log_mutex, coder, MSG_DONGLE);
-	display_log(coder->log_mutex, coder, MSG_DONGLE);
-	display_log(coder->log_mutex, coder, MSG_COMPILE);
+	display_compile_log(coder->log_mutex, coder);
 	completed = wait_phase(coder, coder->config->time_to_compile);
 	pthread_mutex_lock(&coder->dongle_1->mutex);
 	pthread_mutex_lock(&coder->dongle_2->mutex);
@@ -69,7 +67,8 @@ static t_bool	refactor(t_coder *coder)
 
 void	*start_coder_thread(void *arg)
 {
-	t_coder	*coder;
+	t_coder		*coder;
+	uint64_t	wait_time;
 
 	coder = arg;
 	while (monitoring_stoped(coder->monitoring) == FALSE
@@ -80,15 +79,24 @@ void	*start_coder_thread(void *arg)
 			coder->failed = TRUE;
 			return (NULL);
 		}
+		pthread_mutex_lock(&coder->monitoring->resource_mutex);
 		while (monitoring_stoped(coder->monitoring) == FALSE
 			&& take_dongle(coder) == FALSE)
 		{
-			pthread_mutex_lock(&coder->monitoring->resource_mutex);
-			pthread_cond_wait(&coder->monitoring->resource_cond,
-				&coder->monitoring->resource_mutex);
-			pthread_mutex_unlock(&coder->monitoring->resource_mutex);
-			usleep(coder->config->dongle_cooldown * 1000);
+			wait_time = get_cooldown_wait(coder);
+			if (wait_time > 0)
+			{
+				pthread_mutex_unlock(&coder->monitoring->resource_mutex);
+				usleep(wait_time * 1000);
+				pthread_mutex_lock(&coder->monitoring->resource_mutex);
+			}
+			else
+			{
+				pthread_cond_wait(&coder->monitoring->resource_cond,
+					&coder->monitoring->resource_mutex);
+			}
 		}
+		pthread_mutex_unlock(&coder->monitoring->resource_mutex);
 		if (monitoring_stoped(coder->monitoring) == TRUE)
 			return (NULL);
 		compile(coder);
