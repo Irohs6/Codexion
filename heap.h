@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   heap.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/23 14:33:08 by gacattan          #+#    #+#             */
-/*   Updated: 2026/10/08 13:53:18 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/10/08 20:40:31 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HEAP_H
 # define HEAP_H
-
 
 # include "types.h"
 

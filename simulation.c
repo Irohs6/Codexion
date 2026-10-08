@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 15:57:54 by gacattan          #+#    #+#             */
-/*   Updated: 2026/10/08 12:03:13 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/10/08 20:49:29 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,19 @@ static t_bool	finish_codexion(t_memory_manager *manager,
 	return (status);
 }
 
+static t_bool	clean_monitor_failure(t_memory_manager *manager,
+	const t_config *config)
+{
+	stop_monitoring(manager->monitoring);
+	join_threads(manager, config->number_of_coders);
+	destroy_mutexes(manager, config->number_of_coders);
+	pthread_cond_destroy(&manager->monitoring->resource_cond);
+	pthread_mutex_destroy(&manager->monitoring->resource_mutex);
+	pthread_mutex_destroy(&manager->monitoring->mutex);
+	free_memory_manager(manager);
+	return (FALSE);
+}
+
 t_bool	run_codexion(const t_config *config, pthread_mutex_t *log_mutex)
 {
 	t_memory_manager	manager;
@@ -60,9 +73,6 @@ t_bool	run_codexion(const t_config *config, pthread_mutex_t *log_mutex)
 		return (FALSE);
 	}
 	if (init_monitoring(&monitoring, &manager) == FALSE)
-	{
-		free_memory_manager(&manager);
-		return (FALSE);
-	}
+		return (clean_monitor_failure(&manager, config));
 	return (finish_codexion(&manager, config));
 }

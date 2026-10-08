@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 15:58:00 by gacattan          #+#    #+#             */
-/*   Updated: 2026/10/08 14:36:20 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/10/08 20:47:15 by iroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	clean_thread_failure(t_memory_manager *manager,
 	int	i;
 
 	i = 0;
+	stop_monitoring(manager->monitoring);
 	while (i < nb_created)
 	{
 		pthread_join(manager->array_coder[i].thread, NULL);
