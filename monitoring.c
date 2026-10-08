@@ -6,7 +6,7 @@
 /*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 15:57:19 by gacattan          #+#    #+#             */
-/*   Updated: 2026/10/07 16:00:21 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/10/08 15:36:27 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	stop_monitoring(t_monitoring *monitoring)
 
 void	*monitoring_function(void *arg)
 {
-	int					burnout_id;
 	t_memory_manager	*manager;
 	t_monitoring		*monitoring;
 	t_coder				*array_coder;
@@ -69,8 +68,6 @@ void	*monitoring_function(void *arg)
 			stop_monitoring(monitoring);
 			break ;
 		}
-		burnout_id = check_all_deadline(array_coder,
-				array_coder[0].config->number_of_coders);
 		if (handle_burnout(array_coder, monitoring) == TRUE)
 			break ;
 		usleep(1000);
