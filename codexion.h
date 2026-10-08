@@ -6,7 +6,7 @@
 /*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 15:55:23 by gacattan          #+#    #+#             */
-/*   Updated: 2026/10/07 15:55:26 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/10/08 14:14:41 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdint.h>
 # include <pthread.h>
 # include <unistd.h>
-# include "utils.h"
+# include "types.h"
 # include "config.h"
 # include "heap.h"
 # include "monitoring.h"

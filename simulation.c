@@ -6,7 +6,7 @@
 /*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 15:57:54 by gacattan          #+#    #+#             */
-/*   Updated: 2026/10/07 16:01:38 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/10/08 12:03:13 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,12 @@ t_bool	run_codexion(const t_config *config, pthread_mutex_t *log_mutex)
 	t_monitoring		monitoring;
 
 	monitoring.stop = FALSE;
-	pthread_mutex_init(&monitoring.mutex, NULL);
-	pthread_mutex_init(&monitoring.resource_mutex, NULL);
-	pthread_cond_init(&monitoring.resource_cond, NULL);
+	if (pthread_mutex_init(&monitoring.mutex, NULL) != 0)
+		return (FALSE);
+	if (pthread_mutex_init(&monitoring.resource_mutex, NULL) != 0)
+		return (FALSE);
+	if (pthread_cond_init(&monitoring.resource_cond, NULL) != 0)
+		return (FALSE);
 	manager.monitoring = &monitoring;
 	if (memory_manager_init(&manager, config->number_of_coders) == FALSE)
 		return (FALSE);

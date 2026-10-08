@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <pthread.h>
 #include "log.h"
-#include "utils.h"
 #include "codexion.h"
 
 t_bool	display_log(pthread_mutex_t *mutex, t_coder *coder, const char *log)

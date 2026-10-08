@@ -6,10 +6,11 @@
 /*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/15 14:14:31 by gacattan          #+#    #+#             */
-/*   Updated: 2026/10/07 15:27:49 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/10/08 11:58:01 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <string.h>
 #include "parser.h"
 #include "error.h"
 
@@ -91,7 +92,7 @@ t_bool	parse(int argc, char **argv, t_config *config)
 	int	index;
 	int	number;
 
-	if (!argv || !config)
+	if (!argv)
 		return (print_error(ERR_NULL, 0));
 	index = 1;
 	while (index != argc - 1)

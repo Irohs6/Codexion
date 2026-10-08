@@ -20,8 +20,7 @@ SRCS = \
 		parser.c \
 		memory_manager.c \
 		monitoring.c \
-		monitoring_checks.c \
-		utils.c
+		monitoring_checks.c
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -pthread
@@ -29,13 +28,13 @@ CFLAGS = -Wall -Wextra -Werror -pthread
 OBJ = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 HEADERS = \
 		codexion.h \
+		types.h \
 		config.h \
 		error.h \
 		log.h \
 		heap.h \
 		memory_manager.h \
 		parser.h \
-		utils.h \
 		monitoring.h
 
 all: $(NAME)

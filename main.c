@@ -6,13 +6,14 @@
 /*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 15:56:33 by gacattan          #+#    #+#             */
-/*   Updated: 2026/10/07 15:56:37 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/10/08 14:15:01 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "parser.h"
-#include "error.h"
 #include "codexion.h"
+#include "error.h"
 
 int	main(int argc, char **argv)
 {

@@ -6,7 +6,7 @@
 /*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/14 14:27:20 by gacattan          #+#    #+#             */
-/*   Updated: 2026/10/07 15:55:43 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/10/08 13:53:08 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define ERROR_H
 
 # include <stdio.h>
-# include "utils.h"
+# include "codexion.h"
 
 # define ERR_ARG_COUNT_MSG "invalid number of arguments"
 # define ERR_EMPTY_MSG "empty string provided"

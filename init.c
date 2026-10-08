@@ -6,7 +6,7 @@
 /*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 15:55:55 by gacattan          #+#    #+#             */
-/*   Updated: 2026/10/07 15:56:00 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/10/08 12:12:58 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ static void	init_dongle_id(t_memory_manager *manager, int nb_coders,
 	manager->array_coder[i].monitoring = monitoring;
 }
 
-static void	init_start_time(t_memory_manager *manager, int count)
+static void	init_start_time(t_memory_manager *manager, int nb_coder)
 {
 	uint64_t	start_time;
 	int			i;
 
 	start_time = now_ms();
 	i = 0;
-	while (i < count)
+	while (i < nb_coder)
 	{
 		manager->array_coder[i].start_time = start_time;
 		manager->array_coder[i].last_time_compile_start = start_time;
@@ -52,10 +52,6 @@ t_bool	init_codexion(t_memory_manager *manager, const t_config *config,
 {
 	int	i;
 
-	if (!manager || !config || !log_mutex)
-		return (print_error(ERR_NULL, 0));
-	if (!manager->array_coder || !manager->array_dongle)
-		return (print_error(ERR_NULL, 0));
 	i = 0;
 	while (i < config->number_of_coders)
 	{

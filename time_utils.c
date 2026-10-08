@@ -6,12 +6,12 @@
 /*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 15:58:08 by gacattan          #+#    #+#             */
-/*   Updated: 2026/10/07 15:58:16 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/10/08 13:51:47 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "codexion.h"
 #include <sys/time.h>
+#include "codexion.h"
 
 uint64_t	now_ms(void)
 {

@@ -6,7 +6,7 @@
 /*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 15:46:25 by gacattan          #+#    #+#             */
-/*   Updated: 2026/10/07 15:48:27 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/10/08 12:59:03 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ t_bool	wait_for_dongles(t_coder *coder)
 		if (wait_time > 0)
 		{
 			pthread_mutex_unlock(&coder->monitoring->resource_mutex);
-			usleep(wait_time * 1000);
+			if (wait_phase(coder, wait_time) == FALSE)
+				return (FALSE);
 			pthread_mutex_lock(&coder->monitoring->resource_mutex);
 		}
 		else

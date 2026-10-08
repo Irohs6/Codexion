@@ -6,7 +6,7 @@
 /*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 15:56:46 by gacattan          #+#    #+#             */
-/*   Updated: 2026/10/07 15:56:49 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/10/08 12:06:26 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,8 @@ void	*ft_calloc(size_t nb_memb, size_t size)
 
 t_bool	memory_manager_init(t_memory_manager *manager, int nb_coder)
 {
-	if (!manager)
-		return (print_error(ERR_NULL, 0));
 	manager->array_coder = NULL;
 	manager->array_dongle = NULL;
-	if (nb_coder <= 0)
-		return (print_error(ERR_COUNT, 0));
 	manager->array_coder = ft_calloc(nb_coder, sizeof(t_coder));
 	if (!manager->array_coder)
 		return (FALSE);
@@ -71,8 +67,6 @@ t_bool	memory_manager_init(t_memory_manager *manager, int nb_coder)
 
 t_bool	free_memory_manager(t_memory_manager *manager)
 {
-	if (!manager)
-		return (print_error(ERR_NULL, 0));
 	if (manager->array_coder)
 	{
 		free(manager->array_coder);

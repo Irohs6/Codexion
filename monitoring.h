@@ -6,7 +6,7 @@
 /*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 15:57:25 by gacattan          #+#    #+#             */
-/*   Updated: 2026/10/07 16:01:16 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/10/08 13:52:50 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MONITORING_H
 
 # include <pthread.h>
-# include "utils.h"
+# include "types.h"
 
 struct	s_memory_manager;
 struct	s_coder;
