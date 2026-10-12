@@ -6,7 +6,7 @@
 /*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 15:55:23 by gacattan          #+#    #+#             */
-/*   Updated: 2026/10/08 14:14:41 by gacattan         ###   ########.fr       */
+/*   Updated: 2026/10/09 11:07:15 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ uint64_t	now_ms(void);
 void		*start_coder_thread(void *arg);
 
 t_bool		run_codexion(const t_config *config, pthread_mutex_t *log_mutex);
-t_bool		join_threads(struct s_memory_manager *manager, int count);
-t_bool		destroy_mutexes(struct s_memory_manager *manager, int count);
+t_bool		join_threads(struct s_memory_manager *manager, int nb_coder);
+t_bool		destroy_mutexes(struct s_memory_manager *manager, int nb_dongle);
 t_bool		take_dongle(t_coder *coder);
 t_bool		wait_phase(t_coder *coder, uint64_t duration_ms);
 uint64_t	get_cooldown_wait(t_coder *coder);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iroh <iroh@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: gacattan <gacattan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/07 15:58:00 by gacattan          #+#    #+#             */
-/*   Updated: 2026/10/08 20:47:15 by iroh             ###   ########.fr       */
+/*   Updated: 2026/10/09 11:06:42 by gacattan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,14 @@ t_bool	init_mutexes(struct s_memory_manager *manager, int nb_dongle)
 	return (TRUE);
 }
 
-t_bool	destroy_mutexes(t_memory_manager *manager, int count)
+t_bool	destroy_mutexes(t_memory_manager *manager, int nb_dongle)
 {
 	int		i;
 	t_bool	status;
 
 	i = 0;
 	status = TRUE;
-	while (i < count)
+	while (i < nb_dongle)
 	{
 		if (pthread_mutex_destroy(&manager->array_dongle[i].mutex) != 0)
 			status = FALSE;

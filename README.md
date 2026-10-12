@@ -10,8 +10,6 @@ A separate monitor checks compilation deadlines and completed compilation counts
 
 The implementation uses a custom two-entry priority queue per dongle. FIFO preserves insertion order; EDF prioritizes the earliest deadline (`last_compile_start + time_to_burnout`). Equal EDF deadlines preserve insertion order. Initial requests are registered for odd coder IDs, then even IDs, before coder threads are created. Each dongle has only two neighbouring requesters, so two slots suffice while each coder has at most one pending request per dongle.
 
-The local subject is available in [English](docs/subject.md) and [French](docs/subject_fr.md). This README describes the implementation; passing a few runs does not establish full timing or starvation guarantees.
-
 ## Instructions
 
 ### Build
@@ -130,7 +128,6 @@ The project's boolean convention is deliberate: `TRUE = 0`, `FALSE = -1`. Use ex
 
 ## Resources
 
-- [Codexion subject, version 1.5](docs/subject.md).
 - POSIX/Linux manual pages: `man pthread_create`, `man pthread_join`, `man pthread_mutex_lock`, `man pthread_cond_wait`, `man gettimeofday`.
 - [The Open Group POSIX reference](https://pubs.opengroup.org/onlinepubs/9799919799/).
 - [Valgrind Helgrind manual](https://valgrind.org/docs/manual/hg-manual.html), for races, lock ordering and pthread misuse.
