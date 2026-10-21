@@ -1,0 +1,75 @@
+38 1 has taken a dongle
+38 1 has taken a dongle
+38 1 is compiling
+71 3 has taken a dongle
+71 3 has taken a dongle
+71 3 is compiling
+110 1 is debugging
+133 3 is debugging
+165 5 has taken a dongle
+165 5 has taken a dongle
+165 5 is compiling
+172 1 is refactoring
+193 2 has taken a dongle
+193 2 has taken a dongle
+193 2 is compiling
+194 3 is refactoring
+226 5 is debugging
+253 2 is debugging
+286 4 has taken a dongle
+286 4 has taken a dongle
+286 4 is compiling
+287 5 is refactoring
+314 1 has taken a dongle
+314 1 has taken a dongle
+314 1 is compiling
+315 2 is refactoring
+347 4 is debugging
+375 1 is debugging
+407 3 has taken a dongle
+407 3 has taken a dongle
+407 3 is compiling
+408 4 is refactoring
+435 5 has taken a dongle
+435 5 has taken a dongle
+435 5 is compiling
+436 1 is refactoring
+468 3 is debugging
+496 5 is debugging
+528 3 is refactoring
+529 2 has taken a dongle
+529 2 has taken a dongle
+529 2 is compiling
+556 4 has taken a dongle
+556 4 has taken a dongle
+556 4 is compiling
+557 5 is refactoring
+590 2 is debugging
+617 4 is debugging
+649 1 has taken a dongle
+649 1 has taken a dongle
+649 1 is compiling
+650 2 is refactoring
+676 3 has taken a dongle
+676 3 has taken a dongle
+676 3 is compiling
+677 4 is refactoring
+769 5 has taken a dongle
+769 5 has taken a dongle
+769 5 is compiling
+797 2 has taken a dongle
+797 2 has taken a dongle
+797 2 is compiling
+889 4 has taken a dongle
+889 4 has taken a dongle
+889 4 is compiling
+==1353== Helgrind, a thread error detector
+==1353== Copyright (C) 2007-2024, and GNU GPL'd, by OpenWorks LLP et al.
+==1353== Using Valgrind-3.26.0 and LibVEX; rerun with -h for copyright info
+==1353== Command: /tmp/natah-audit-results-20261021/codexion_audit 5 10000 60 60 60 3 60 edf
+==1353== 
+==1353== 
+==1353== Use --history-level=approx or =none to gain increased speed, at
+==1353== the cost of reduced accuracy of conflicting-access information
+==1353== For lists of detected and suppressed errors, rerun with: -s
+==1353== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 18914 from 141)

@@ -1,0 +1,712 @@
+[
+  {
+    "name": "single_0",
+    "args": [
+      1,
+      800,
+      200,
+      200,
+      200,
+      10,
+      0,
+      "fifo"
+    ],
+    "rc": 0,
+    "seconds": 0.802,
+    "counts": {},
+    "burnouts": [
+      {
+        "line": "800 1 burned out",
+        "after": 0,
+        "delay": 0
+      }
+    ],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "single_1",
+    "args": [
+      1,
+      800,
+      200,
+      200,
+      200,
+      10,
+      0,
+      "fifo"
+    ],
+    "rc": 0,
+    "seconds": 0.803,
+    "counts": {},
+    "burnouts": [
+      {
+        "line": "800 1 burned out",
+        "after": 0,
+        "delay": 0
+      }
+    ],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "single_2",
+    "args": [
+      1,
+      800,
+      200,
+      200,
+      200,
+      10,
+      0,
+      "fifo"
+    ],
+    "rc": 0,
+    "seconds": 0.803,
+    "counts": {},
+    "burnouts": [
+      {
+        "line": "800 1 burned out",
+        "after": 0,
+        "delay": 0
+      }
+    ],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "easy_fifo_0",
+    "args": [
+      5,
+      2000,
+      200,
+      200,
+      200,
+      10,
+      0,
+      "fifo"
+    ],
+    "rc": 0,
+    "seconds": 6.007,
+    "counts": {
+      "1": 10,
+      "3": 10,
+      "5": 10,
+      "2": 10,
+      "4": 10
+    },
+    "burnouts": [],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "easy_fifo_1",
+    "args": [
+      5,
+      2000,
+      200,
+      200,
+      200,
+      10,
+      0,
+      "fifo"
+    ],
+    "rc": 0,
+    "seconds": 6.008,
+    "counts": {
+      "1": 10,
+      "3": 10,
+      "2": 10,
+      "5": 10,
+      "4": 10
+    },
+    "burnouts": [],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "easy_fifo_2",
+    "args": [
+      5,
+      2000,
+      200,
+      200,
+      200,
+      10,
+      0,
+      "fifo"
+    ],
+    "rc": 0,
+    "seconds": 6.007,
+    "counts": {
+      "1": 10,
+      "3": 10,
+      "5": 10,
+      "2": 10,
+      "4": 10
+    },
+    "burnouts": [],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "easy_edf_0",
+    "args": [
+      5,
+      2000,
+      200,
+      200,
+      200,
+      7,
+      0,
+      "edf"
+    ],
+    "rc": 0,
+    "seconds": 4.206,
+    "counts": {
+      "1": 7,
+      "3": 7,
+      "5": 7,
+      "2": 7,
+      "4": 7
+    },
+    "burnouts": [],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "easy_edf_1",
+    "args": [
+      5,
+      2000,
+      200,
+      200,
+      200,
+      7,
+      0,
+      "edf"
+    ],
+    "rc": 0,
+    "seconds": 4.206,
+    "counts": {
+      "1": 7,
+      "3": 7,
+      "5": 7,
+      "2": 7,
+      "4": 7
+    },
+    "burnouts": [],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "easy_edf_2",
+    "args": [
+      5,
+      2000,
+      200,
+      200,
+      200,
+      7,
+      0,
+      "edf"
+    ],
+    "rc": 0,
+    "seconds": 4.206,
+    "counts": {
+      "1": 7,
+      "3": 7,
+      "5": 7,
+      "2": 7,
+      "4": 7
+    },
+    "burnouts": [],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "burnout_0",
+    "args": [
+      5,
+      500,
+      200,
+      200,
+      200,
+      10,
+      0,
+      "fifo"
+    ],
+    "rc": 0,
+    "seconds": 0.603,
+    "counts": {
+      "1": 1,
+      "3": 1,
+      "5": 1,
+      "2": 1,
+      "4": 1
+    },
+    "burnouts": [
+      {
+        "line": "500 1 burned out",
+        "after": 0,
+        "delay": 0
+      }
+    ],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "burnout_1",
+    "args": [
+      5,
+      500,
+      200,
+      200,
+      200,
+      10,
+      0,
+      "fifo"
+    ],
+    "rc": 0,
+    "seconds": 0.603,
+    "counts": {
+      "1": 1,
+      "3": 1,
+      "5": 1,
+      "2": 1,
+      "4": 1
+    },
+    "burnouts": [
+      {
+        "line": "501 1 burned out",
+        "after": 0,
+        "delay": 0
+      }
+    ],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "burnout_2",
+    "args": [
+      5,
+      500,
+      200,
+      200,
+      200,
+      10,
+      0,
+      "fifo"
+    ],
+    "rc": 0,
+    "seconds": 0.603,
+    "counts": {
+      "1": 1,
+      "3": 1,
+      "5": 1,
+      "2": 1,
+      "4": 1
+    },
+    "burnouts": [
+      {
+        "line": "501 1 burned out",
+        "after": 0,
+        "delay": 0
+      }
+    ],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "burnout_3",
+    "args": [
+      5,
+      500,
+      200,
+      200,
+      200,
+      10,
+      0,
+      "fifo"
+    ],
+    "rc": 0,
+    "seconds": 0.604,
+    "counts": {
+      "1": 1,
+      "3": 1,
+      "5": 1,
+      "2": 1,
+      "4": 1
+    },
+    "burnouts": [
+      {
+        "line": "501 1 burned out",
+        "after": 0,
+        "delay": 0
+      }
+    ],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "burnout_4",
+    "args": [
+      5,
+      500,
+      200,
+      200,
+      200,
+      10,
+      0,
+      "fifo"
+    ],
+    "rc": 0,
+    "seconds": 0.604,
+    "counts": {
+      "1": 1,
+      "3": 1,
+      "5": 1,
+      "2": 1,
+      "4": 1
+    },
+    "burnouts": [
+      {
+        "line": "500 1 burned out",
+        "after": 0,
+        "delay": 0
+      }
+    ],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "cooldown400_0",
+    "args": [
+      5,
+      3000,
+      200,
+      200,
+      200,
+      10,
+      400,
+      "fifo"
+    ],
+    "rc": 0,
+    "seconds": 14.604,
+    "counts": {
+      "1": 10,
+      "3": 10,
+      "2": 10,
+      "5": 10,
+      "4": 10
+    },
+    "burnouts": [],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "cooldown400_1",
+    "args": [
+      5,
+      3000,
+      200,
+      200,
+      200,
+      10,
+      400,
+      "fifo"
+    ],
+    "rc": 0,
+    "seconds": 14.604,
+    "counts": {
+      "1": 10,
+      "3": 10,
+      "2": 10,
+      "5": 10,
+      "4": 10
+    },
+    "burnouts": [],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "cooldown400_2",
+    "args": [
+      5,
+      3000,
+      200,
+      200,
+      200,
+      10,
+      400,
+      "fifo"
+    ],
+    "rc": 0,
+    "seconds": 14.604,
+    "counts": {
+      "1": 10,
+      "3": 10,
+      "5": 10,
+      "2": 10,
+      "4": 10
+    },
+    "burnouts": [],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "cooldown800_fifo_0",
+    "args": [
+      5,
+      3000,
+      200,
+      200,
+      200,
+      10,
+      800,
+      "fifo"
+    ],
+    "rc": 0,
+    "seconds": 3.002,
+    "counts": {
+      "1": 2,
+      "3": 1,
+      "2": 1,
+      "5": 1,
+      "4": 1
+    },
+    "burnouts": [
+      {
+        "line": "3001 3 burned out",
+        "after": 0,
+        "delay": 0
+      }
+    ],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "cooldown800_fifo_1",
+    "args": [
+      5,
+      3000,
+      200,
+      200,
+      200,
+      10,
+      800,
+      "fifo"
+    ],
+    "rc": 0,
+    "seconds": 3.202,
+    "counts": {
+      "1": 2,
+      "3": 1,
+      "2": 1,
+      "5": 2,
+      "4": 1
+    },
+    "burnouts": [
+      {
+        "line": "3001 3 burned out",
+        "after": 0,
+        "delay": 0
+      }
+    ],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "cooldown800_fifo_2",
+    "args": [
+      5,
+      3000,
+      200,
+      200,
+      200,
+      10,
+      800,
+      "fifo"
+    ],
+    "rc": 0,
+    "seconds": 3.002,
+    "counts": {
+      "1": 2,
+      "3": 1,
+      "2": 1,
+      "5": 1,
+      "4": 1
+    },
+    "burnouts": [
+      {
+        "line": "3001 3 burned out",
+        "after": 0,
+        "delay": 0
+      }
+    ],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "cooldown800_edf_0",
+    "args": [
+      5,
+      3000,
+      200,
+      200,
+      200,
+      10,
+      800,
+      "edf"
+    ],
+    "rc": 0,
+    "seconds": 3.002,
+    "counts": {
+      "1": 2,
+      "3": 1,
+      "2": 1,
+      "5": 1,
+      "4": 1
+    },
+    "burnouts": [
+      {
+        "line": "3001 3 burned out",
+        "after": 0,
+        "delay": 0
+      }
+    ],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "cooldown800_edf_1",
+    "args": [
+      5,
+      3000,
+      200,
+      200,
+      200,
+      10,
+      800,
+      "edf"
+    ],
+    "rc": 0,
+    "seconds": 3.202,
+    "counts": {
+      "1": 2,
+      "3": 1,
+      "2": 1,
+      "5": 2,
+      "4": 1
+    },
+    "burnouts": [
+      {
+        "line": "3001 3 burned out",
+        "after": 0,
+        "delay": 0
+      }
+    ],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  },
+  {
+    "name": "cooldown800_edf_2",
+    "args": [
+      5,
+      3000,
+      200,
+      200,
+      200,
+      10,
+      800,
+      "edf"
+    ],
+    "rc": 0,
+    "seconds": 3.202,
+    "counts": {
+      "1": 2,
+      "3": 1,
+      "5": 2,
+      "2": 1,
+      "4": 1
+    },
+    "burnouts": [
+      {
+        "line": "3000 3 burned out",
+        "after": 0,
+        "delay": 0
+      }
+    ],
+    "invalid_lines": [],
+    "pairs_ok": true,
+    "short_phases": [],
+    "cooldown_lower_bound_violations": [],
+    "tools": []
+  }
+]

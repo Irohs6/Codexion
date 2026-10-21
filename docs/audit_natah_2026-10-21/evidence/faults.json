@@ -1,0 +1,142 @@
+[
+  {
+    "key": "FAIL_A",
+    "value": 1,
+    "rc": 1,
+    "summary": [
+      "LIVE mutex=0 cond=0",
+      "==22503==     in use at exit: 0 bytes in 0 blocks",
+      "==22503== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+    ]
+  },
+  {
+    "key": "FAIL_A",
+    "value": 2,
+    "rc": 1,
+    "summary": [
+      "LIVE mutex=0 cond=0",
+      "==22504==     in use at exit: 0 bytes in 0 blocks",
+      "==22504== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+    ]
+  },
+  {
+    "key": "FAIL_M",
+    "value": 1,
+    "rc": 1,
+    "summary": [
+      "LIVE mutex=0 cond=0",
+      "==22505==     in use at exit: 0 bytes in 0 blocks",
+      "==22505== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+    ]
+  },
+  {
+    "key": "FAIL_M",
+    "value": 2,
+    "rc": 1,
+    "summary": [
+      "LIVE mutex=0 cond=0",
+      "==22506==     in use at exit: 0 bytes in 0 blocks",
+      "==22506== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+    ]
+  },
+  {
+    "key": "FAIL_M",
+    "value": 3,
+    "rc": 1,
+    "summary": [
+      "LIVE mutex=0 cond=0",
+      "==22507==     in use at exit: 0 bytes in 0 blocks",
+      "==22507== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+    ]
+  },
+  {
+    "key": "FAIL_M",
+    "value": 4,
+    "rc": 1,
+    "summary": [
+      "LIVE mutex=0 cond=0",
+      "==22508==     in use at exit: 0 bytes in 0 blocks",
+      "==22508== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+    ]
+  },
+  {
+    "key": "FAIL_M",
+    "value": 5,
+    "rc": 1,
+    "summary": [
+      "LIVE mutex=0 cond=0",
+      "==22509==     in use at exit: 0 bytes in 0 blocks",
+      "==22509== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+    ]
+  },
+  {
+    "key": "FAIL_M",
+    "value": 6,
+    "rc": 1,
+    "summary": [
+      "LIVE mutex=0 cond=0",
+      "==22510==     in use at exit: 0 bytes in 0 blocks",
+      "==22510== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+    ]
+  },
+  {
+    "key": "FAIL_M",
+    "value": 7,
+    "rc": 1,
+    "summary": [
+      "LIVE mutex=0 cond=0",
+      "==22511==     in use at exit: 0 bytes in 0 blocks",
+      "==22511== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+    ]
+  },
+  {
+    "key": "FAIL_C",
+    "value": 1,
+    "rc": 1,
+    "summary": [
+      "LIVE mutex=0 cond=0",
+      "==22512==     in use at exit: 0 bytes in 0 blocks",
+      "==22512== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+    ]
+  },
+  {
+    "key": "FAIL_T",
+    "value": 1,
+    "rc": 1,
+    "summary": [
+      "LIVE mutex=0 cond=0",
+      "==22513==     in use at exit: 0 bytes in 0 blocks",
+      "==22513== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+    ]
+  },
+  {
+    "key": "FAIL_T",
+    "value": 2,
+    "rc": 1,
+    "summary": [
+      "LIVE mutex=0 cond=0",
+      "==22514==     in use at exit: 0 bytes in 0 blocks",
+      "==22514== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+    ]
+  },
+  {
+    "key": "FAIL_T",
+    "value": 3,
+    "rc": 1,
+    "summary": [
+      "LIVE mutex=0 cond=0",
+      "==22516==     in use at exit: 0 bytes in 0 blocks",
+      "==22516== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+    ]
+  },
+  {
+    "key": "FAIL_T",
+    "value": 5,
+    "rc": 1,
+    "summary": [
+      "LIVE mutex=0 cond=0",
+      "==22519==     in use at exit: 0 bytes in 0 blocks",
+      "==22519== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+    ]
+  }
+]

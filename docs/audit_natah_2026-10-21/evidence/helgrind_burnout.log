@@ -1,0 +1,32 @@
+42 1 has taken a dongle
+42 1 has taken a dongle
+42 1 is compiling
+70 3 has taken a dongle
+70 3 has taken a dongle
+70 3 is compiling
+252 1 is debugging
+254 5 has taken a dongle
+254 5 has taken a dongle
+254 5 is compiling
+271 3 is debugging
+271 2 has taken a dongle
+271 2 has taken a dongle
+271 2 is compiling
+453 1 is refactoring
+455 5 is debugging
+456 4 has taken a dongle
+456 4 has taken a dongle
+456 4 is compiling
+471 3 is refactoring
+472 2 is debugging
+542 1 burned out
+==1365== Helgrind, a thread error detector
+==1365== Copyright (C) 2007-2024, and GNU GPL'd, by OpenWorks LLP et al.
+==1365== Using Valgrind-3.26.0 and LibVEX; rerun with -h for copyright info
+==1365== Command: /tmp/natah-audit-results-20261021/codexion_audit 5 500 200 200 200 10 0 fifo
+==1365== 
+==1365== 
+==1365== Use --history-level=approx or =none to gain increased speed, at
+==1365== the cost of reduced accuracy of conflicting-access information
+==1365== For lists of detected and suppressed errors, rerun with: -s
+==1365== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 10471 from 136)

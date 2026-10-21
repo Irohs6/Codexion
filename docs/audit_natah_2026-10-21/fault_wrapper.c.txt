@@ -1,0 +1,19 @@
+#include <pthread.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <errno.h>
+static int mi,ci,ti,ai,live_m,live_c;
+int __real_pthread_mutex_init(pthread_mutex_t*,const pthread_mutexattr_t*);
+int __real_pthread_mutex_destroy(pthread_mutex_t*);
+int __real_pthread_cond_init(pthread_cond_t*,const pthread_condattr_t*);
+int __real_pthread_cond_destroy(pthread_cond_t*);
+int __real_pthread_create(pthread_t*,const pthread_attr_t*,void*(*)(void*),void*);
+void *__real_malloc(size_t);
+static int fail(const char*s,int n){const char*v=getenv(s);return v && atoi(v)==n;}
+int __wrap_pthread_mutex_init(pthread_mutex_t*m,const pthread_mutexattr_t*a){int x;if(fail("FAIL_M",++mi))return EAGAIN;x=__real_pthread_mutex_init(m,a);if(!x)live_m++;return x;}
+int __wrap_pthread_mutex_destroy(pthread_mutex_t*m){int x=__real_pthread_mutex_destroy(m);if(!x)live_m--;return x;}
+int __wrap_pthread_cond_init(pthread_cond_t*c,const pthread_condattr_t*a){int x;if(fail("FAIL_C",++ci))return EAGAIN;x=__real_pthread_cond_init(c,a);if(!x)live_c++;return x;}
+int __wrap_pthread_cond_destroy(pthread_cond_t*c){int x=__real_pthread_cond_destroy(c);if(!x)live_c--;return x;}
+int __wrap_pthread_create(pthread_t*t,const pthread_attr_t*a,void*(*f)(void*),void*v){if(fail("FAIL_T",++ti))return EAGAIN;return __real_pthread_create(t,a,f,v);}
+void *__wrap_malloc(size_t n){if(fail("FAIL_A",++ai))return NULL;return __real_malloc(n);}
+__attribute__((destructor)) static void report(void){fprintf(stderr,"LIVE mutex=%d cond=%d\n",live_m,live_c);}

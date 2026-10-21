@@ -1,0 +1,88 @@
+[
+  {
+    "args": [
+      5,
+      3000,
+      200,
+      200,
+      200,
+      10,
+      800,
+      "fifo"
+    ],
+    "rc": 0,
+    "seconds": 3.001,
+    "burnouts": [
+      "3000 1 burned out"
+    ],
+    "compiles": 6
+  },
+  {
+    "args": [
+      5,
+      3000,
+      200,
+      200,
+      200,
+      10,
+      400,
+      "fifo"
+    ],
+    "rc": 0,
+    "seconds": 3.004,
+    "burnouts": [
+      "3000 1 burned out"
+    ],
+    "compiles": 10
+  },
+  {
+    "args": [
+      5,
+      10000,
+      60,
+      60,
+      60,
+      3,
+      60,
+      "fifo"
+    ],
+    "rc": 0,
+    "seconds": 1.143,
+    "burnouts": [],
+    "compiles": 15
+  },
+  {
+    "args": [
+      5,
+      10000,
+      200,
+      60,
+      60,
+      3,
+      0,
+      "fifo"
+    ],
+    "rc": 0,
+    "seconds": 10.001,
+    "burnouts": [
+      "10000 1 burned out"
+    ],
+    "compiles": 8
+  },
+  {
+    "args": [
+      5,
+      2000,
+      200,
+      200,
+      200,
+      7,
+      0,
+      "edf"
+    ],
+    "rc": 0,
+    "seconds": 4.205,
+    "burnouts": [],
+    "compiles": 35
+  }
+]

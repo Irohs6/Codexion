@@ -1,0 +1,1129 @@
+[
+  {
+    "name": "missing",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid number of arguments.: 8\n"
+  },
+  {
+    "name": "extra",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo",
+      "x"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid number of arguments.: 10\n"
+  },
+  {
+    "name": "none",
+    "args": [],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid number of arguments.: 1\n"
+  },
+  {
+    "name": "arg1='-1'",
+    "args": [
+      "-1",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 1\n"
+  },
+  {
+    "name": "arg1=''",
+    "args": [
+      "",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": -11,
+    "stdout": "",
+    "stderr": "Error: Invalid number of coders\n"
+  },
+  {
+    "name": "arg1='-'",
+    "args": [
+      "-",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 1\n"
+  },
+  {
+    "name": "arg1='1x'",
+    "args": [
+      "1x",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 1\n"
+  },
+  {
+    "name": "arg1='1.5'",
+    "args": [
+      "1.5",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 1\n"
+  },
+  {
+    "name": "arg1='+1'",
+    "args": [
+      "+1",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 1\n"
+  },
+  {
+    "name": "arg1=' 1'",
+    "args": [
+      " 1",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 1\n"
+  },
+  {
+    "name": "arg1='2147483648'",
+    "args": [
+      "2147483648",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Integer overflow for argument: 2147483648\n"
+  },
+  {
+    "name": "arg1='999999999999999999999'",
+    "args": [
+      "999999999999999999999",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Integer overflow for argument: 999999999999999999999\n"
+  },
+  {
+    "name": "arg2='-1'",
+    "args": [
+      "4",
+      "-1",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 2\n"
+  },
+  {
+    "name": "arg2=''",
+    "args": [
+      "4",
+      "",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 0,
+    "stdout": "0 1 burned out\n",
+    "stderr": ""
+  },
+  {
+    "name": "arg2='-'",
+    "args": [
+      "4",
+      "-",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 2\n"
+  },
+  {
+    "name": "arg2='1x'",
+    "args": [
+      "4",
+      "1x",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 2\n"
+  },
+  {
+    "name": "arg2='1.5'",
+    "args": [
+      "4",
+      "1.5",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 2\n"
+  },
+  {
+    "name": "arg2='+1'",
+    "args": [
+      "4",
+      "+1",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 2\n"
+  },
+  {
+    "name": "arg2=' 1'",
+    "args": [
+      "4",
+      " 1",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 2\n"
+  },
+  {
+    "name": "arg2='2147483648'",
+    "args": [
+      "4",
+      "2147483648",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Integer overflow for argument: 2147483648\n"
+  },
+  {
+    "name": "arg2='999999999999999999999'",
+    "args": [
+      "4",
+      "999999999999999999999",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Integer overflow for argument: 999999999999999999999\n"
+  },
+  {
+    "name": "arg3='-1'",
+    "args": [
+      "4",
+      "2000",
+      "-1",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 3\n"
+  },
+  {
+    "name": "arg3=''",
+    "args": [
+      "4",
+      "2000",
+      "",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 0,
+    "stdout": "0 1 has taken a dongle\n0 1 has taken a dongle\n0 1 is compiling\n0 3 has taken a dongle\n0 3 has taken a dongle\n0 3 is compiling\n0 1 is debugging\n0 3 is debugging\n60 2 has taken a dongle\n60 2 has taken a dongle\n60 2 is compiling\n60 4 has taken a dongle\n60 4 has taken a dongle\n60 4 is compiling\n60 2 is debugging\n60 4 is debugging\n60 1 is refactoring\n61 3 is refactoring\n120 4 is refactoring\n120 2 is refactoring\n120 1 has taken a dongle\n120 1 has taken a dongle\n120 1 is compiling\n121 3 has taken a dongle\n121 3 has taken a dongle\n121 3 is compiling\n181 4 has taken a dongle\n181 4 has taken a dongle\n181 4 is compiling\n181 2 has taken a dongle\n181 2 has taken a dongle\n181 2 is compiling\n",
+    "stderr": ""
+  },
+  {
+    "name": "arg3='-'",
+    "args": [
+      "4",
+      "2000",
+      "-",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 3\n"
+  },
+  {
+    "name": "arg3='1x'",
+    "args": [
+      "4",
+      "2000",
+      "1x",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 3\n"
+  },
+  {
+    "name": "arg3='1.5'",
+    "args": [
+      "4",
+      "2000",
+      "1.5",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 3\n"
+  },
+  {
+    "name": "arg3='+1'",
+    "args": [
+      "4",
+      "2000",
+      "+1",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 3\n"
+  },
+  {
+    "name": "arg3=' 1'",
+    "args": [
+      "4",
+      "2000",
+      " 1",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 3\n"
+  },
+  {
+    "name": "arg3='2147483648'",
+    "args": [
+      "4",
+      "2000",
+      "2147483648",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Integer overflow for argument: 2147483648\n"
+  },
+  {
+    "name": "arg3='999999999999999999999'",
+    "args": [
+      "4",
+      "2000",
+      "999999999999999999999",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Integer overflow for argument: 999999999999999999999\n"
+  },
+  {
+    "name": "arg4='-1'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "-1",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 4\n"
+  },
+  {
+    "name": "arg4=''",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 0,
+    "stdout": "1 1 has taken a dongle\n1 1 has taken a dongle\n1 1 is compiling\n1 3 has taken a dongle\n1 3 has taken a dongle\n1 3 is compiling\n61 1 is debugging\n61 1 is refactoring\n61 3 is debugging\n61 3 is refactoring\n121 4 has taken a dongle\n121 4 has taken a dongle\n121 4 is compiling\n121 2 has taken a dongle\n121 2 has taken a dongle\n121 2 is compiling\n181 4 is debugging\n181 2 is debugging\n181 4 is refactoring\n181 2 is refactoring\n241 1 has taken a dongle\n241 1 has taken a dongle\n241 1 is compiling\n241 3 has taken a dongle\n241 3 has taken a dongle\n241 3 is compiling\n361 4 has taken a dongle\n361 4 has taken a dongle\n361 4 is compiling\n361 2 has taken a dongle\n361 2 has taken a dongle\n361 2 is compiling\n",
+    "stderr": ""
+  },
+  {
+    "name": "arg4='-'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "-",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 4\n"
+  },
+  {
+    "name": "arg4='1x'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "1x",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 4\n"
+  },
+  {
+    "name": "arg4='1.5'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "1.5",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 4\n"
+  },
+  {
+    "name": "arg4='+1'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "+1",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 4\n"
+  },
+  {
+    "name": "arg4=' 1'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      " 1",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 4\n"
+  },
+  {
+    "name": "arg4='2147483648'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "2147483648",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Integer overflow for argument: 2147483648\n"
+  },
+  {
+    "name": "arg4='999999999999999999999'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "999999999999999999999",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Integer overflow for argument: 999999999999999999999\n"
+  },
+  {
+    "name": "arg5='-1'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "-1",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 5\n"
+  },
+  {
+    "name": "arg5=''",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 0,
+    "stdout": "0 1 has taken a dongle\n0 1 has taken a dongle\n0 1 is compiling\n1 3 has taken a dongle\n1 3 has taken a dongle\n1 3 is compiling\n61 1 is debugging\n61 3 is debugging\n121 4 has taken a dongle\n121 4 has taken a dongle\n121 4 is compiling\n121 1 is refactoring\n121 2 has taken a dongle\n121 2 has taken a dongle\n121 2 is compiling\n121 3 is refactoring\n181 4 is debugging\n181 2 is debugging\n241 3 has taken a dongle\n241 3 has taken a dongle\n241 3 is compiling\n241 1 has taken a dongle\n241 1 has taken a dongle\n241 1 is compiling\n241 4 is refactoring\n241 2 is refactoring\n361 2 has taken a dongle\n361 2 has taken a dongle\n361 2 is compiling\n361 4 has taken a dongle\n361 4 has taken a dongle\n361 4 is compiling\n",
+    "stderr": ""
+  },
+  {
+    "name": "arg5='-'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "-",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 5\n"
+  },
+  {
+    "name": "arg5='1x'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "1x",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 5\n"
+  },
+  {
+    "name": "arg5='1.5'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "1.5",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 5\n"
+  },
+  {
+    "name": "arg5='+1'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "+1",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 5\n"
+  },
+  {
+    "name": "arg5=' 1'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      " 1",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 5\n"
+  },
+  {
+    "name": "arg5='2147483648'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "2147483648",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Integer overflow for argument: 2147483648\n"
+  },
+  {
+    "name": "arg5='999999999999999999999'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "999999999999999999999",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Integer overflow for argument: 999999999999999999999\n"
+  },
+  {
+    "name": "arg6='-1'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "-1",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 6\n"
+  },
+  {
+    "name": "arg6=''",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "",
+      "60",
+      "fifo"
+    ],
+    "rc": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "name": "arg6='-'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "-",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 6\n"
+  },
+  {
+    "name": "arg6='1x'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "1x",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 6\n"
+  },
+  {
+    "name": "arg6='1.5'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "1.5",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 6\n"
+  },
+  {
+    "name": "arg6='+1'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "+1",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 6\n"
+  },
+  {
+    "name": "arg6=' 1'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      " 1",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 6\n"
+  },
+  {
+    "name": "arg6='2147483648'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2147483648",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Integer overflow for argument: 2147483648\n"
+  },
+  {
+    "name": "arg6='999999999999999999999'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "999999999999999999999",
+      "60",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Integer overflow for argument: 999999999999999999999\n"
+  },
+  {
+    "name": "arg7='-1'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "-1",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 7\n"
+  },
+  {
+    "name": "arg7=''",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "",
+      "fifo"
+    ],
+    "rc": 0,
+    "stdout": "0 1 has taken a dongle\n0 1 has taken a dongle\n0 1 is compiling\n0 3 has taken a dongle\n0 3 has taken a dongle\n0 3 is compiling\n60 1 is debugging\n60 3 is debugging\n60 2 has taken a dongle\n60 2 has taken a dongle\n60 2 is compiling\n60 4 has taken a dongle\n60 4 has taken a dongle\n60 4 is compiling\n120 1 is refactoring\n120 3 is refactoring\n120 4 is debugging\n120 2 is debugging\n180 1 has taken a dongle\n180 1 has taken a dongle\n180 1 is compiling\n180 2 is refactoring\n180 3 has taken a dongle\n180 3 has taken a dongle\n180 3 is compiling\n180 4 is refactoring\n241 2 has taken a dongle\n241 2 has taken a dongle\n241 2 is compiling\n241 4 has taken a dongle\n241 4 has taken a dongle\n241 4 is compiling\n",
+    "stderr": ""
+  },
+  {
+    "name": "arg7='-'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "-",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 7\n"
+  },
+  {
+    "name": "arg7='1x'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "1x",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 7\n"
+  },
+  {
+    "name": "arg7='1.5'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "1.5",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 7\n"
+  },
+  {
+    "name": "arg7='+1'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "+1",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 7\n"
+  },
+  {
+    "name": "arg7=' 1'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      " 1",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid argument at position: 7\n"
+  },
+  {
+    "name": "arg7='2147483648'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "2147483648",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Integer overflow for argument: 2147483648\n"
+  },
+  {
+    "name": "arg7='999999999999999999999'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "999999999999999999999",
+      "fifo"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Integer overflow for argument: 999999999999999999999\n"
+  },
+  {
+    "name": "scheduler='EDF'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "EDF"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid scheduler argument: 8\n"
+  },
+  {
+    "name": "scheduler='edf '",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "edf "
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid scheduler argument: 8\n"
+  },
+  {
+    "name": "scheduler=''",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      ""
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid scheduler argument: 8\n"
+  },
+  {
+    "name": "scheduler='random'",
+    "args": [
+      "4",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "random"
+    ],
+    "rc": 1,
+    "stdout": "",
+    "stderr": "Error: Invalid scheduler argument: 8\n"
+  },
+  {
+    "name": "zero_coders",
+    "args": [
+      "0",
+      "2000",
+      "60",
+      "60",
+      "60",
+      "2",
+      "60",
+      "fifo"
+    ],
+    "rc": -11,
+    "stdout": "",
+    "stderr": "Error: Invalid number of coders\n"
+  }
+]

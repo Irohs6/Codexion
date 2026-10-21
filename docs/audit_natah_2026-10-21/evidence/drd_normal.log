@@ -1,0 +1,73 @@
+54 1 has taken a dongle
+54 1 has taken a dongle
+54 1 is compiling
+70 3 has taken a dongle
+70 3 has taken a dongle
+70 3 is compiling
+124 1 is debugging
+132 3 is debugging
+182 5 has taken a dongle
+182 5 has taken a dongle
+182 5 is compiling
+185 1 is refactoring
+191 2 has taken a dongle
+191 2 has taken a dongle
+191 2 is compiling
+193 3 is refactoring
+243 5 is debugging
+252 2 is debugging
+303 4 has taken a dongle
+303 4 has taken a dongle
+303 4 is compiling
+303 5 is refactoring
+311 1 has taken a dongle
+311 1 has taken a dongle
+311 1 is compiling
+312 2 is refactoring
+363 4 is debugging
+372 1 is debugging
+423 3 has taken a dongle
+423 3 has taken a dongle
+423 3 is compiling
+424 4 is refactoring
+431 5 has taken a dongle
+431 5 has taken a dongle
+431 5 is compiling
+432 1 is refactoring
+484 3 is debugging
+493 5 is debugging
+543 2 has taken a dongle
+543 2 has taken a dongle
+543 2 is compiling
+544 3 is refactoring
+552 4 has taken a dongle
+552 4 has taken a dongle
+552 4 is compiling
+553 5 is refactoring
+604 2 is debugging
+613 4 is debugging
+664 1 has taken a dongle
+664 1 has taken a dongle
+664 1 is compiling
+664 2 is refactoring
+672 3 has taken a dongle
+672 3 has taken a dongle
+672 3 is compiling
+673 4 is refactoring
+784 5 has taken a dongle
+784 5 has taken a dongle
+784 5 is compiling
+793 2 has taken a dongle
+793 2 has taken a dongle
+793 2 is compiling
+904 4 has taken a dongle
+904 4 has taken a dongle
+904 4 is compiling
+==1372== drd, a thread error detector
+==1372== Copyright (C) 2006-2024, and GNU GPL'd, by Bart Van Assche et al.
+==1372== Using Valgrind-3.26.0 and LibVEX; rerun with -h for copyright info
+==1372== Command: /tmp/natah-audit-results-20261021/codexion_audit 5 10000 60 60 60 3 60 edf
+==1372== 
+==1372== 
+==1372== For lists of detected and suppressed errors, rerun with: -s
+==1372== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 13 from 5)
